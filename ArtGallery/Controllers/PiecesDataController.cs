@@ -126,7 +126,7 @@ namespace ArtGallery.Controllers
         }
 
         // DELETE: api/PiecesData/5
-        [ResponseType( typeof( Piece ) )]
+        [HttpPost]
         public IHttpActionResult DeletePiece( int id )
         {
             Piece piece = db.pieces.Find( id );
@@ -137,7 +137,7 @@ namespace ArtGallery.Controllers
             db.pieces.Remove( piece );
             db.SaveChanges();
 
-            return Ok( piece );
+            return Ok();
         }
 
         protected override void Dispose( bool disposing )

@@ -109,19 +109,18 @@ namespace ArtGallery.Controllers
         }
 
         // GET: Pieces/Delete/5
-        public ActionResult Delete( int id )
+        public ActionResult DeleteConfirm( int id )
         {
             ViewPiece viewPiece = helper.getViewPiece( id );
             return View( viewPiece );
         }
 
-        // POST: Pieces/Delete/5
-        [HttpPost, ActionName( "Delete" )]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed( int id )
+        // POST: Piece/Delete/5
+        [HttpPost]
+        public ActionResult Delete( int id, FormCollection collection )
         {
             string url = "PiecesData/DeletePiece/" + id;
-            HttpResponseMessage response = helper.doGetRequest( url );
+            HttpResponseMessage response = helper.doPostRequest( url, "" );
             return RedirectToAction( "Index" );
         }
     }

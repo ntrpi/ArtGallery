@@ -1,12 +1,14 @@
 ﻿@model ArtGallery.Models.ViewModels.ViewPiece
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
-<h2>@Model.pieceDto.pieceName</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this piece?</h3>
 <div>
+    <h4>@Model.pieceDto.pieceName</h4>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor( model => model.pieceDto.pieceDescription )
@@ -62,11 +64,14 @@
 
     </dl>
 </div>
-<div class="actionLinkDiv">
-    @Html.ActionLink("Back to List", "Index") |
-    <div class="buttonAction">
-        @Html.ActionLink( "Edit", "Edit", new {
-            id = Model.pieceDto.pieceId
-        } )
+
+@using( Html.BeginForm( "Delete", "Pieces", new {
+    id = Model.pieceDto.pieceId
+} ) ) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink( "Back to List", "Index" )
     </div>
-</div>
+}
