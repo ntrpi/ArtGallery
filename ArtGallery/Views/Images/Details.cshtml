@@ -1,0 +1,50 @@
+﻿@model ArtGallery.Models.Image
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Image</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Piece.pieceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Piece.pieceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imageExt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imageExt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isMainImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isMainImage)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.imageId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

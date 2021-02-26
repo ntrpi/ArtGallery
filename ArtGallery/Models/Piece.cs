@@ -49,9 +49,9 @@ namespace ArtGallery.Models
             get; set;
         }
 
-        //ICollection<Image> images {
-        //    get; set;
-        //}
+        ICollection<Image> images {
+            get; set;
+        }
 
         //[DisplayName( "Techniques" )]
         //ICollection<Technique> techniques {

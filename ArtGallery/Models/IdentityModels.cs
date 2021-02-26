@@ -57,5 +57,9 @@ namespace ArtGallery.Models
             get; set;
         }
 
+        public DbSet<Image> images {
+            get; set;
+        }
+
     }
 }

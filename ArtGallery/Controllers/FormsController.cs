@@ -43,8 +43,8 @@ namespace ArtGallery.Controllers
             if( !response.IsSuccessStatusCode ) {
                 return View( new List<FormDto>() );
             }
-            IEnumerable<FormDto> pieceDtos = response.Content.ReadAsAsync<IEnumerable<FormDto>>().Result;
-            return View( pieceDtos );
+            IEnumerable<FormDto> formDtos = response.Content.ReadAsAsync<IEnumerable<FormDto>>().Result;
+            return View( formDtos );
         }
 
         private FormDto getFormDto( HttpResponseMessage response )
