@@ -31,18 +31,23 @@ namespace ArtGallery.Controllers
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ACCESS_TOKEN);
         }
 
+        public HttpResponseMessage doGetRequest( string url )
+        {
+            HttpResponseMessage response = client.GetAsync( url ).Result;
+            return response;
+        }
+
         public HttpResponseMessage doPostRequest( string url, Object obj )
         {
             HttpContent content = new StringContent( jss.Serialize( obj ) );
+            Debug.WriteLine( jss.Serialize( obj ) );
             content.Headers.ContentType = new MediaTypeHeaderValue( "application/json" );
             HttpResponseMessage response = client.PostAsync( url, content ).Result;
             return response;
         }
 
-        public FormDto getFormDto( int formId )
+        public FormDto getFormDto( HttpResponseMessage response )
         {
-            string url = "FormsData/GetFormDto/" + formId;
-            HttpResponseMessage response = client.GetAsync( url ).Result;
             if( !response.IsSuccessStatusCode ) {
                 return null;
             }
@@ -52,10 +57,26 @@ namespace ArtGallery.Controllers
             return formDto;
         }
 
+        public FormDto getFormDto( int formId )
+        {
+            HttpResponseMessage response = doGetRequest( "FormsData/GetFormDto/" + formId );
+            return getFormDto( response );
+        }
+
+        public IEnumerable<FormDto> getFormDtos()
+        {
+            string url = "FormsData/GetFormDtos";
+            HttpResponseMessage response = doGetRequest( url );
+            if( !response.IsSuccessStatusCode ) {
+                return new List<FormDto>();
+            }
+            IEnumerable<FormDto> formDtos = response.Content.ReadAsAsync<IEnumerable<FormDto>>().Result;
+            return formDtos;
+        }
+
         public PieceDto getPieceDto( int id )
         {
-            string url = "PiecesData/GetPieceDto/" + id;
-            HttpResponseMessage response = client.GetAsync( url ).Result;
+            HttpResponseMessage response = doGetRequest( "PiecesData/GetPieceDto/" + id );
             if( !response.IsSuccessStatusCode ) {
                 return null;
             }
@@ -82,8 +103,6 @@ namespace ArtGallery.Controllers
             return getImageDto( response );
         }
 
-
-
         public ViewPiece getViewPiece( PieceDto pieceDto )
         {
             ViewPiece viewPiece = new ViewPiece();
@@ -97,6 +116,19 @@ namespace ArtGallery.Controllers
         {
             PieceDto pieceDto = getPieceDto( id );
             return getViewPiece( pieceDto );
+        }
+
+        public UpdatePiece getUpdatePiece( PieceDto pieceDto )
+        {
+            UpdatePiece viewPiece = new UpdatePiece();
+            viewPiece.piece = pieceDto;
+            viewPiece.forms = getFormDtos();
+            return viewPiece;
+        }
+        public UpdatePiece getUpdatePiece( int id )
+        {
+            PieceDto pieceDto = getPieceDto( id );
+            return getUpdatePiece( pieceDto );
         }
     }
 }

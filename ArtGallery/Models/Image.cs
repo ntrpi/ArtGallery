@@ -28,7 +28,7 @@ namespace ArtGallery.Models
             get; set;
         }
 
-        // An image is of one piece.
+        // An image is of one pieceDto.
         [ForeignKey( "Piece" )]
         public int pieceId {
             get; set;

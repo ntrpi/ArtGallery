@@ -40,7 +40,7 @@ namespace ArtGallery.Models
             get; set;
         }
 
-        // A piece has one form.
+        // A pieceDto has one form.
         [ForeignKey( "Form" )]
         public int? formId {
             get; set;

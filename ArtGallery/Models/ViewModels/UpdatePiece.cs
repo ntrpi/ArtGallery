@@ -8,6 +8,7 @@ namespace ArtGallery.Models.ViewModels
 {
     public class UpdatePiece
     {
+        // For some reason changing the name of piece to pieceDto or forms to formDtos breaks the create functionality. I have absolutely no idea why.
         public PieceDto piece {
             get; set;
         }

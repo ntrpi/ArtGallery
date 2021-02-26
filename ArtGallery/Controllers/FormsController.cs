@@ -16,22 +16,11 @@ namespace ArtGallery.Controllers
         //https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0
 
         private JavaScriptSerializer jss = new JavaScriptSerializer();
-        private static readonly HttpClient client;
+        private static readonly ControllersHelper helper;
 
         static FormsController()
         {
-            HttpClientHandler handler = new HttpClientHandler() {
-                AllowAutoRedirect = false
-            };
-            client = new HttpClient( handler );
-
-            // Change this to match your own local port number.
-            client.BaseAddress = new Uri( "https://localhost:44397/api/" );
-
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue( "application/json" ) );
-
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ACCESS_TOKEN);
+            helper = new ControllersHelper();
         }
 
 
@@ -39,36 +28,18 @@ namespace ArtGallery.Controllers
         public ActionResult Index()
         {
             string url = "FormsData/GetFormDtos";
-            HttpResponseMessage response = client.GetAsync( url ).Result;
+            HttpResponseMessage response = helper.doGetRequest( url );
             if( !response.IsSuccessStatusCode ) {
                 return View( new List<FormDto>() );
             }
             IEnumerable<FormDto> formDtos = response.Content.ReadAsAsync<IEnumerable<FormDto>>().Result;
-            return View( formDtos );
-        }
-
-        private FormDto getFormDto( HttpResponseMessage response )
-        {
-            if( !response.IsSuccessStatusCode ) {
-                return null;
-            }
-
-            string jsonContent = response.Content.ReadAsStringAsync().Result;
-            FormDto formDto = jss.Deserialize<FormDto>( jsonContent );
-            return formDto;
-        }
-
-        private FormDto getFormDto( int formId )
-        {
-            string url = "FormsData/GetFormDto/" + formId;
-            HttpResponseMessage response = client.GetAsync( url ).Result;
-            return getFormDto( response );
+            return View( helper.getFormDtos() );
         }
 
         // GET: Forms/Details/5
         public ActionResult Details(int id)
         {
-            FormDto formDto = getFormDto( id );
+            FormDto formDto = helper.getFormDto( id );
             if( formDto == null ) {
                 return HttpNotFound();
             }
@@ -82,15 +53,6 @@ namespace ArtGallery.Controllers
             return View();
         }
 
-        private HttpResponseMessage doFormPostRequest( string url, Form form )
-        {
-            HttpContent content = new StringContent( jss.Serialize( form ) );
-            content.Headers.ContentType = new MediaTypeHeaderValue( "application/json" );
-            HttpResponseMessage response = client.PostAsync( url, content ).Result;
-            return response;
-        }
-
-
         // POST: Forms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -99,20 +61,20 @@ namespace ArtGallery.Controllers
         public ActionResult Create( Form form )
         {
             string url = "FormsData/CreateForm";
-            HttpResponseMessage response = doFormPostRequest( url, form );
+            HttpResponseMessage response = helper.doPostRequest( url, form );
             if( !response.IsSuccessStatusCode ) {
                 ViewBag.errorMessage = "Unable to add form.";
                 return View();
             }
 
-            FormDto formDto = getFormDto( response );
-            return Index();
+            FormDto formDto = helper.getFormDto( response );
+            return RedirectToAction( "Index" );
         }
 
         // GET: Forms/Edit/5
         public ActionResult Edit(int id)
         {
-            return View( getFormDto( id ) );
+            return View( helper.getFormDto( id ) );
         }
 
         // POST: Forms/Edit/5
@@ -122,16 +84,15 @@ namespace ArtGallery.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "formId,formName")] Form form)
         {
-            string url = "FormsData/UpdateForm";
-            HttpResponseMessage response = doFormPostRequest( url, form );
+            string url = "FormsData/UpdateForm/" + form.formId;
+            HttpResponseMessage response = helper.doPostRequest( url, form );
             if( !response.IsSuccessStatusCode ) {
                 ViewBag.errorMessage = "Unable to update form.";
                 return View();
             }
 
-            FormDto formDto = getFormDto( response );
             return RedirectToAction( "Details", new {
-                formDto = formDto
+                id = form.formId
             } );
         }
 
@@ -139,7 +100,7 @@ namespace ArtGallery.Controllers
         [HttpGet]
         public ActionResult DeleteConfirm( int id )
         {
-            FormDto formDto = getFormDto( id );
+            FormDto formDto = helper.getFormDto( id );
             return View( formDto );
         }
 
@@ -148,9 +109,7 @@ namespace ArtGallery.Controllers
         public ActionResult Delete( int id, FormCollection collection )
         {
             string url = "FormsData/DeleteForm/" + id;
-
-            HttpContent content = new StringContent( "" );
-            HttpResponseMessage response = client.PostAsync( url, content ).Result;
+            HttpResponseMessage response = helper.doPostRequest( url, "" );
 
             return RedirectToAction( "Index" );
         }

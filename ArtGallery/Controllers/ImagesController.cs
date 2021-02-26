@@ -12,34 +12,19 @@ namespace ArtGallery.Controllers
 {
     public class ImagesController : Controller
     {
-        //Http Client is the proper way to connect to a webapi
-        //https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0
-
         private JavaScriptSerializer jss = new JavaScriptSerializer();
-        private static readonly HttpClient client;
+        private static readonly ControllersHelper helper;
 
         static ImagesController()
         {
-            HttpClientHandler handler = new HttpClientHandler() {
-                AllowAutoRedirect = false
-            };
-            client = new HttpClient( handler );
-
-            // Change this to match your own local port number.
-            client.BaseAddress = new Uri( "https://localhost:44397/api/" );
-
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue( "application/json" ) );
-
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ACCESS_TOKEN);
+            helper = new ControllersHelper();
         }
 
 
         // GET: Images
         public ActionResult Index()
         {
-            string url = "ImagesData/GetImageDtos";
-            HttpResponseMessage response = client.GetAsync( url ).Result;
+            HttpResponseMessage response = helper.doGetRequest( "ImagesData/GetImageDtos" );
             if( !response.IsSuccessStatusCode ) {
                 return View( new List<ImageDto>() );
             }
@@ -50,7 +35,7 @@ namespace ArtGallery.Controllers
         // GET: Images/Details/5
         public ActionResult Details( int id )
         {
-            ImageDto imageDto = getImageDto( id );
+            ImageDto imageDto = helper.getImageDto( id );
             if( imageDto == null ) {
                 return HttpNotFound();
             }
@@ -59,41 +44,38 @@ namespace ArtGallery.Controllers
 
         public ActionResult Create( int id )
         {
-            return View( getPieceDto( id ) );
+            return View( helper.getPieceDto( id ) );
         }
+
+        private HttpResponseMessage doImagePostRequest( string url, Image image )
+        {
+            HttpResponseMessage response = helper.doPostRequest( url, image );
+            return response;
+        }
+
 
         // POST: Images/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "imageId,imageName,imageExt,isMainImage,pieceId")] Image image)
+        public ActionResult Create( Image image )
         {
-            if (ModelState.IsValid)
-            {
-                db.images.Add(image);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            string url = "ImagesData/CreateImage";
+            HttpResponseMessage response = doImagePostRequest( url, image );
+            if( !response.IsSuccessStatusCode ) {
+                ViewBag.errorMessage = "Unable to add image.";
+                return View();
             }
 
-            ViewBag.pieceId = new SelectList(db.pieces, "pieceId", "pieceName", image.pieceId);
-            return View(image);
+            ImageDto imageDto = helper.getImageDto( response );
+            return Index();
         }
 
         // GET: Images/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit( int id )
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Image image = db.images.Find(id);
-            if (image == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.pieceId = new SelectList(db.pieces, "pieceId", "pieceName", image.pieceId);
-            return View(image);
+            return View( helper.getImageDto( id ) );
         }
 
         // POST: Images/Edit/5
@@ -101,51 +83,37 @@ namespace ArtGallery.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "imageId,imageName,imageExt,isMainImage,pieceId")] Image image)
+        public ActionResult Edit( [Bind( Include = "imageId,imageName" )] Image image )
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(image).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            string url = "ImagesData/UpdateImage";
+            HttpResponseMessage response = doImagePostRequest( url, image );
+            if( !response.IsSuccessStatusCode ) {
+                ViewBag.errorMessage = "Unable to update image.";
+                return View();
             }
-            ViewBag.pieceId = new SelectList(db.pieces, "pieceId", "pieceName", image.pieceId);
-            return View(image);
+
+            ImageDto imageDto = helper.getImageDto( response );
+            return RedirectToAction( "Details", new {
+                imageDto = imageDto
+            } );
         }
 
-        // GET: Images/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Image/Delete/5
+        [HttpGet]
+        public ActionResult DeleteConfirm( int id )
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Image image = db.images.Find(id);
-            if (image == null)
-            {
-                return HttpNotFound();
-            }
-            return View(image);
+            ImageDto imageDto = helper.getImageDto( id );
+            return View( imageDto );
         }
 
-        // POST: Images/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        // POST: Image/Delete/5
+        [HttpPost]
+        public ActionResult Delete( int id, FormCollection collection )
         {
-            Image image = db.images.Find(id);
-            db.images.Remove(image);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            string url = "ImagesData/DeleteImage/" + id;
+            HttpResponseMessage response = helper.doPostRequest( url, "" );
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return RedirectToAction( "Index" );
         }
     }
 }
