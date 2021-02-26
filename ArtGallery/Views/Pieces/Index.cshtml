@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ArtGallery.Models.ViewModels.ViewPiece>
+
+@{
+    ViewBag.Title = "Pieces";
+}
+
+<h2>Pieces</h2>
+
+@if( Model.Count() == 0 ) {
+    <div class="messageDiv">There are no pieces to display.</div>
+} else {
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor( model => model.formDto.formName )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.pieceName )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.pieceDescription )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.length )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.width )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.height )
+            </th>
+            <th>
+                @Html.DisplayNameFor( model => model.pieceDto.piecePrice )
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach( var viewPiece in Model ) {
+            <tr>
+                <td>
+                    @if( viewPiece.formDto != null ) {
+                        @Html.DisplayFor( modelItem => viewPiece.formDto.formName )
+                    }
+                </td>
+                @if( viewPiece.pieceDto == null ) {
+                    <td></td>
+                } else {
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.pieceName )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.pieceDescription )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.length )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.width )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.height )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => viewPiece.pieceDto.piecePrice )
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink( "Edit", "Edit", new {
+                        id = viewPiece.pieceDto.pieceId
+                    } ) |
+                    @Html.ActionLink( "Details", "Details", new {
+                        id = viewPiece.pieceDto.pieceId
+                    } ) |
+                    @Html.ActionLink( "Delete", "Delete", new {
+                        id = viewPiece.pieceDto.pieceId
+                    } )
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+<div class="actionLinksDiv">
+    <div class="buttonAction">
+        @Html.ActionLink( "Add New Piece", "Create" )
+    </div>
+</div>
+
+

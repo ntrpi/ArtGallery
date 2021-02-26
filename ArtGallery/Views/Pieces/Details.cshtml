@@ -1,0 +1,74 @@
+﻿@model ArtGallery.Models.ViewModels.ViewPiece
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>@Model.pieceDto.pieceName</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor( model => model.pieceDto.pieceDescription )
+        </dt>
+
+        <dd>
+            @Html.DisplayFor( model => model.pieceDto.pieceDescription )
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor( model => model.formDto.formName )
+        </dt>
+
+        <dd>
+            @if( Model.formDto == null ) {
+                <span>None</span>
+            } else {
+                @Html.DisplayFor( model => model.formDto.formName )
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor( model => model.pieceDto.length )
+        </dt>
+
+        <dd>
+            @Html.DisplayFor( model => model.pieceDto.length )
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor( model => model.pieceDto.width )
+        </dt>
+
+        <dd>
+            @Html.DisplayFor( model => model.pieceDto.width )
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor( model => model.pieceDto.height )
+        </dt>
+
+        <dd>
+            @Html.DisplayFor( model => model.pieceDto.height )
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor( model => model.pieceDto.piecePrice )
+        </dt>
+
+        <dd>
+            @Html.DisplayFor( model => model.pieceDto.piecePrice )
+        </dd>
+
+    </dl>
+</div>
+<div class="actionLinkDiv">
+    @Html.ActionLink("Back to List", "Index") |
+    <div class="buttonAction">
+        @Html.ActionLink( "Edit", "Edit", new {
+            id = Model.pieceDto.pieceId
+        } )
+    </div>
+</div>
