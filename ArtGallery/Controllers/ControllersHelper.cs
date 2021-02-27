@@ -46,6 +46,14 @@ namespace ArtGallery.Controllers
             return response;
         }
 
+        public HttpResponseMessage doMultiPartPostRequest( string url, MultipartFormDataContent requestcontent )
+        {
+            HttpResponseMessage response = client.PostAsync( url, requestcontent ).Result;
+            return response;
+        }
+
+        
+
         public FormDto getFormDto( HttpResponseMessage response )
         {
             if( !response.IsSuccessStatusCode ) {
@@ -85,6 +93,17 @@ namespace ArtGallery.Controllers
             return pieceDto;
         }
 
+        public IEnumerable<PieceDto> getPieceDtos()
+        {
+            string url = "PiecesData/GetPieceDtos";
+            HttpResponseMessage response = doGetRequest( url );
+            if( !response.IsSuccessStatusCode ) {
+                return new List<PieceDto>();
+            }
+            IEnumerable<PieceDto> pieceDtos = response.Content.ReadAsAsync<IEnumerable<PieceDto>>().Result;
+            return pieceDtos;
+        }
+
         public ImageDto getImageDto( HttpResponseMessage response )
         {
             if( !response.IsSuccessStatusCode ) {
@@ -101,6 +120,20 @@ namespace ArtGallery.Controllers
             string url = "ImagesData/GetImageDto/" + imageId;
             HttpResponseMessage response = client.GetAsync( url ).Result;
             return getImageDto( response );
+        }
+
+        public IEnumerable<ImageDto> getImageDtos( int pieceId = 0 )
+        {
+            string url = "ImagesData/GetImageDtos";
+            if( pieceId != 0 ) {
+                url += "ForPiece/" + pieceId;
+            }
+            HttpResponseMessage response = doGetRequest( url );
+            if( !response.IsSuccessStatusCode ) {
+                return new List<ImageDto>();
+            }
+            IEnumerable<ImageDto> imageDtos = response.Content.ReadAsAsync<IEnumerable<ImageDto>>().Result;
+            return imageDtos;
         }
 
         public ViewPiece getViewPiece( PieceDto pieceDto )
@@ -129,6 +162,28 @@ namespace ArtGallery.Controllers
         {
             PieceDto pieceDto = getPieceDto( id );
             return getUpdatePiece( pieceDto );
+        }
+
+        public UpdateImage getUpdateImage( int pieceId, int imageId = 0 )
+        {
+            UpdateImage updateImage = new UpdateImage();
+            if( imageId != 0 ) {
+                updateImage.imageDto = getImageDto( imageId );
+                updateImage.pieceDto = getPieceDto( updateImage.imageDto.pieceId );
+            } else if( pieceId != 0 ) {
+                updateImage.pieceDto = getPieceDto( pieceId );
+            }
+            return updateImage;
+        }
+
+        public ViewImage getViewImage( int imageId )
+        {
+            ImageDto imageDto = getImageDto( imageId );
+            ViewImage viewImage = new ViewImage {
+                imageDto = imageDto,
+                pieceDto = getPieceDto( imageDto.pieceId )
+            };
+            return viewImage;
         }
     }
 }

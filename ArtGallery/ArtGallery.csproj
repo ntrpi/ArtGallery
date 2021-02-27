@@ -214,6 +214,10 @@
     <Compile Include="Migrations\202102261540382_ArtGallery_202102261040.Designer.cs">
       <DependentUpon>202102261540382_ArtGallery_202102261040.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102262329035_ArtGallery_202102261828.cs" />
+    <Compile Include="Migrations\202102262329035_ArtGallery_202102261828.Designer.cs">
+      <DependentUpon>202102262329035_ArtGallery_202102261828.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Form.cs" />
@@ -221,7 +225,9 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Piece.cs" />
+    <Compile Include="Models\ViewModels\UpdateImage.cs" />
     <Compile Include="Models\ViewModels\UpdatePiece.cs" />
+    <Compile Include="Models\ViewModels\ViewImage.cs" />
     <Compile Include="Models\ViewModels\ViewPiece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -294,13 +300,15 @@
     <Content Include="Views\Forms\Index.cshtml" />
     <Content Include="Views\Home\Categories.cshtml" />
     <Content Include="Views\Images\Create.cshtml" />
-    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\DeleteConfirm.cshtml" />
     <Content Include="Views\Images\Details.cshtml" />
     <Content Include="Views\Images\Edit.cshtml" />
     <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Images\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -330,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102261540382_ArtGallery_202102261040.resx">
       <DependentUpon>202102261540382_ArtGallery_202102261040.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102262329035_ArtGallery_202102261828.resx">
+      <DependentUpon>202102262329035_ArtGallery_202102261828.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,11 +1,15 @@
 ﻿@model ArtGallery.Models.ViewModels.UpdateImage
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "View";
 }
 
-<h2>Edit Image for @Model.pieceDto.pieceName</h2>
+<h2>Update</h2>
 
+@{
+    //The attribute enctype="multipart/form-data" is required
+    //if you are sending files as part of the HTTP POST request
+}
 @using( Html.BeginForm( "Edit", "Images", new {
     id = Model.imageDto.imageId
 }, FormMethod.Post, new {
@@ -23,7 +27,6 @@
     } )
     <input style="display: none" type="text" name="imageExt" value="@Model.imageDto.imageExt" />
     <input style="display: none" type="number" name="pieceId" value="@Model.imageDto.pieceId" />
-    <input style="display: none" type="text" name="imageOldName" value="@Model.imageDto.imageOldName" />
 
     <div class="form-group">
         @Html.LabelFor( model => model.imageDto.imageName, htmlAttributes: new {
@@ -41,20 +44,13 @@
         </div>
     </div>
 </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="actionLinkDiv buttonAction">
-                @Html.ActionLink( "Cancel", "Details", new {
-                    id = Model.imageDto.imageId
-                } )
-            </span>
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-default" />
     </div>
+</div>
 }
 
-
-
-<div class="actionLinkDiv">
-    @Html.ActionLink( "Back to Images List", "Index" )
+<div>
+    @Html.ActionLink( "Back to List", "Images" )
 </div>

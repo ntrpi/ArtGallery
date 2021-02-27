@@ -1,0 +1,48 @@
+﻿@model ArtGallery.Models.ViewModels.ViewImage
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Image for @Model.pieceDto.pieceName</h2>
+<hr />
+
+<h3>Are you sure you want to delete this image?</h3>
+<hr />
+<div>
+    <div>
+        <div class="featuredImageDivParent">
+            <div class="featuredImageDiv">
+                @{
+                    var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+                }
+                <img src="@source" />
+            </div>
+        </div>
+    </div>
+
+    @using( Html.BeginForm( "Delete", "Images", new {
+        id = Model.imageDto.imageId    
+    } ) ) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <div class="actionLinkDiv">
+                <input type="submit" value="Delete" class="btn btn-default" />
+                <span class="buttonAction">
+                    @Html.ActionLink( "Cancel", "Details", new {
+                        id = Model.imageDto.imageId
+                    } )
+                </span>
+            </div>
+        </div>
+    }
+</div>
+<div class="actionLinkDiv">
+    @Html.ActionLink( "Back to Images List", "Index", new {
+        id = Model.pieceDto.pieceId
+    } ) |
+    @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
+        id = Model.pieceDto.pieceId
+    } )
+</div>

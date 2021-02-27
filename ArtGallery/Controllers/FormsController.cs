@@ -67,8 +67,7 @@ namespace ArtGallery.Controllers
                 return View();
             }
 
-            FormDto formDto = helper.getFormDto( response );
-            return RedirectToAction( "Index" );
+           return RedirectToAction( "Index" );
         }
 
         // GET: Forms/Edit/5

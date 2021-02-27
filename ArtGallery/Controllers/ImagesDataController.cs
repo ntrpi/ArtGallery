@@ -28,8 +28,12 @@ namespace ArtGallery.Controllers
                 imageName = image.imageName,
                 imageExt = image.imageExt,
                 isMainImage = image.isMainImage,
-                pieceId = image.pieceId
+                pieceId = image.pieceId,
+                imagesPath = Image.imagesPath
             };
+            if( image.imageOldName == null ) {
+                imageDto.imageOldName = image.imageName;
+            }
             return imageDto;
         }
 
@@ -52,7 +56,7 @@ namespace ArtGallery.Controllers
             return images;
         }
 
-        private IEnumerable<Image> getImagesForImage( int imageId )
+        private IEnumerable<Image> getImagesForPiece( int imageId )
         {
             List<Image> images = db.images.Where( i => i.imageId == imageId ).ToList();
             return images;
@@ -76,14 +80,19 @@ namespace ArtGallery.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ImageDto> GetImageDtosForImage( int imageId )
+        public IEnumerable<ImageDto> GetImageDtosForPiece( int pieceId )
         {
-            IEnumerable<Image> images = getImagesForImage( imageId );
+            IEnumerable<Image> images = getImagesForPiece( pieceId );
             return getImageDtos( images );
         }
 
+        private string getImageLocalPath( string imageName, string imageExt )
+        {
+            string imagePath = Path.Combine( HttpContext.Current.Server.MapPath( "~/Content/Images/" ), imageName + '.' + imageExt );
+            return imagePath;
+        }
+
         // PUT: api/ImagesData/5
-        [ResponseType( typeof( void ) )]
         [HttpPost]
         public IHttpActionResult UpdateImage( int id, [FromBody] Image image )
         {
@@ -95,10 +104,18 @@ namespace ArtGallery.Controllers
                 return BadRequest();
             }
 
-            db.Entry( image ).State = EntityState.Modified;
+            string imageOldName = image.imageOldName;
+            image.imageOldName = image.imageName;
 
             try {
+                db.Entry( image ).State = EntityState.Modified;
                 db.SaveChanges();
+
+                // Update the local file.
+                string oldPath = getImageLocalPath( imageOldName, image.imageExt );
+                string newPath = getImageLocalPath( image.imageName, image.imageExt );
+                System.IO.File.Move( oldPath, newPath );
+
             } catch( DbUpdateConcurrencyException ) {
                 if( !ImageExists( id ) ) {
                     return NotFound();
@@ -107,12 +124,12 @@ namespace ArtGallery.Controllers
                 }
             }
 
-            return StatusCode( HttpStatusCode.NoContent );
+            return Ok( id );
         }
 
         // POST: api/ImagesData/CreateImage
         // FORM DATA: Image JSON Object
-        [ResponseType( typeof( Image ) )]
+        // id == pieceId
         [HttpPost]
         public IHttpActionResult CreateImage( int id )
         {
@@ -152,7 +169,7 @@ namespace ArtGallery.Controllers
                     + Stopwatch.GetTimestamp();
 
                 // Create a complete file path.
-                string imagePath = Path.Combine( HttpContext.Current.Server.MapPath( "~/Content/Images/" ), image.imageName + '.' + image.imageExt );
+                string imagePath = getImageLocalPath( image.imageName, image.imageExt );
 
                 // Save the image.
                 imageFile.SaveAs( imagePath );
@@ -177,7 +194,7 @@ namespace ArtGallery.Controllers
         }
 
         // DELETE: api/ImagesData/5
-        [ResponseType( typeof( Image ) )]
+        [HttpPost]
         public IHttpActionResult DeleteImage( int id )
         {
             Image image = db.images.Find( id );
@@ -188,10 +205,8 @@ namespace ArtGallery.Controllers
             db.images.Remove( image );
             db.SaveChanges();
 
-            return Ok( image );
+            return Ok();
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

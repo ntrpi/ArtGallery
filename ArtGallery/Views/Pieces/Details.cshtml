@@ -63,10 +63,17 @@
     </dl>
 </div>
 <div class="actionLinkDiv">
-    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink( "Back to List", "Index" ) |
     <div class="buttonAction">
         @Html.ActionLink( "Edit", "Edit", new {
             id = Model.pieceDto.pieceId
         } )
+    </div> |
+    <div class="buttonAction">
+        @Html.ActionLink( "Add New Image", "../Images/Create", new {
+            id = Model.pieceDto.pieceId
+        } )
     </div>
+
 </div>
+

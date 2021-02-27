@@ -21,6 +21,10 @@ namespace ArtGallery.Models
             get; set;
         }
 
+        public string imageOldName {
+            get; set;
+        }
+
         public string imageExt {
             get; set;
         }
@@ -44,7 +48,12 @@ namespace ArtGallery.Models
             get; set;
         }
 
+        [DisplayName( "File Name" )]
         public string imageName {
+            get; set;
+        }
+
+        public string imageOldName {
             get; set;
         }
 
@@ -52,11 +61,16 @@ namespace ArtGallery.Models
             get; set;
         }
 
+        [DisplayName( "Is Primary Image" )]
         public bool isMainImage {
             get; set;
         }
 
         public int pieceId {
+            get; set;
+        }
+
+        public string imagesPath {
             get; set;
         }
     }

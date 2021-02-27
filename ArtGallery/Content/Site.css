@@ -30,7 +30,7 @@ textarea {
     padding: 1em;
 }
 
-.actionLinksDiv a {
+.actionLinkDiv a {
     padding: .25em;
 }
 
@@ -38,7 +38,7 @@ textarea {
     border: 1px solid darkGrey;
     border-radius: 5%;
     background-color: gainsboro;
-    padding: .5em 1.2em;
+    padding: .4em 1.2em;
     display: inline-block;
 }
 
@@ -47,6 +47,20 @@ textarea {
     color: black;
 }
 
+/* Buttons to look like Action Links*/
+.buttonLikeActionDiv {
+    padding: 1em;
+}
+
+.buttonLikeAction {
+    border: 1px solid darkGrey;
+    border-radius: 5%;
+    background-color: gainsboro;
+    padding: .5em 1.2em;
+    color: black;
+}
+
+/* Message div */
 
 .messageDiv {
     font-size: 1.2em;

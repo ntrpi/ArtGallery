@@ -1,50 +1,35 @@
-﻿@model ArtGallery.Models.Image
+﻿@model ArtGallery.Models.ViewModels.ViewImage
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Image for @Model.pieceDto.pieceName</h2>
+<hr />
 
 <div>
-    <h4>Image</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Piece.pieceName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Piece.pieceName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.imageName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.imageName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.imageExt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.imageExt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isMainImage)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isMainImage)
-        </dd>
-
-    </dl>
+    <div class="featuredImageDivParent" style="display: inline-block">
+        <div class="featuredImageDiv">
+            @{
+                var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+            }
+            <img src="@source" />
+        </div>
+        <div class="actionLinkDiv">
+            <div class="buttonAction" style="float: right">
+                @Html.ActionLink( "Edit", "Edit", new {
+                    id = Model.imageDto.imageId
+                } )
+            </div>
+        </div>
+    </div>
+    <div class="actionLinkDiv">
+        @Html.ActionLink( "Back to Images List", "Index", new {
+            id = Model.pieceDto.pieceId
+        } ) |
+        @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
+            id = Model.pieceDto.pieceId
+        } )
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.imageId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,62 +22,73 @@ namespace ArtGallery.Controllers
             helper = new ControllersHelper();
         }
 
-
         // GET: Images
         public ActionResult Index()
         {
-            HttpResponseMessage response = helper.doGetRequest( "ImagesData/GetImageDtos" );
-            if( !response.IsSuccessStatusCode ) {
-                return View( new List<ImageDto>() );
-            }
-            IEnumerable<ImageDto> imageDtos = response.Content.ReadAsAsync<IEnumerable<ImageDto>>().Result;
+            IEnumerable<ImageDto> imageDtos = helper.getImageDtos();
             return View( imageDtos );
         }
 
         // GET: Images/Details/5
         public ActionResult Details( int id )
         {
-            ImageDto imageDto = helper.getImageDto( id );
-            if( imageDto == null ) {
-                return HttpNotFound();
-            }
-            return View( imageDto );
+            return View( helper.getViewImage( id ) );
         }
 
         public ActionResult Create( int id )
         {
-            return View( helper.getPieceDto( id ) );
+            UpdateImage updateImage = helper.getUpdateImage( id );
+            return View( updateImage );
         }
 
-        private HttpResponseMessage doImagePostRequest( string url, Image image )
-        {
-            HttpResponseMessage response = helper.doPostRequest( url, image );
-            return response;
-        }
-
-
-        // POST: Images/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Image/Create
+        // id == pieceId
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create( Image image )
+        public ActionResult Create( int id, HttpPostedFileBase imageData )
         {
-            string url = "ImagesData/CreateImage";
-            HttpResponseMessage response = doImagePostRequest( url, image );
-            if( !response.IsSuccessStatusCode ) {
-                ViewBag.errorMessage = "Unable to add image.";
-                return View();
+            Debug.WriteLine( "Received image for piece id " + id );
+
+            string url = "ImagesData/CreateImage/" + id;
+
+            MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+            HttpContent imagecontent = null;
+            try {
+                imagecontent = new StreamContent( imageData.InputStream );
+            } catch( Exception e ) {
+                UpdateImage updateImage = helper.getUpdateImage( id );
+                ViewBag.errorMessage = "Please choose an image for " + updateImage.pieceDto.pieceName + ".";
+                return View( updateImage );
             }
 
-            ImageDto imageDto = helper.getImageDto( response );
-            return Index();
+            requestcontent.Add( imagecontent, "pieceImage", imageData.FileName );
+            HttpResponseMessage response = helper.doMultiPartPostRequest( url, requestcontent );
+            if( !response.IsSuccessStatusCode ) {
+                UpdateImage updateImage = helper.getUpdateImage( id );
+                ViewBag.errorMessage = "Unable to add image for " + updateImage.pieceDto.pieceName + ".";
+                return View( updateImage );
+            }
+
+            try {
+                int imageId = response.Content.ReadAsAsync<int>().Result;
+                return RedirectToAction( "Details", new {
+                    id = imageId
+                } );
+            } catch( Exception e ) {
+                Debug.WriteLine( e );
+                return RedirectToAction( "Index" );
+            }
         }
 
         // GET: Images/Edit/5
         public ActionResult Edit( int id )
         {
-            return View( helper.getImageDto( id ) );
+            return View( helper.getUpdateImage( 0, id ) );
+        }
+
+        // GET: Images/Edit/5
+        public ActionResult View( int id )
+        {
+            return View( helper.getUpdateImage( 0, id ) );
         }
 
         // POST: Images/Edit/5
@@ -83,18 +96,16 @@ namespace ArtGallery.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( [Bind( Include = "imageId,imageName" )] Image image )
+        public ActionResult Edit( [Bind( Include = "imageId,imageName,imageOldName,imageExt,isMainImage,pieceId" )] Image image )
         {
-            string url = "ImagesData/UpdateImage";
-            HttpResponseMessage response = doImagePostRequest( url, image );
+            string url = "ImagesData/UpdateImage/" + image.imageId;
+            HttpResponseMessage response = helper.doPostRequest( url, image );
             if( !response.IsSuccessStatusCode ) {
                 ViewBag.errorMessage = "Unable to update image.";
-                return View();
+                return View( helper.getUpdateImage( 0, image.imageId ) );
             }
-
-            ImageDto imageDto = helper.getImageDto( response );
             return RedirectToAction( "Details", new {
-                imageDto = imageDto
+                id = image.imageId
             } );
         }
 
@@ -102,8 +113,7 @@ namespace ArtGallery.Controllers
         [HttpGet]
         public ActionResult DeleteConfirm( int id )
         {
-            ImageDto imageDto = helper.getImageDto( id );
-            return View( imageDto );
+            return View( helper.getViewImage( id ) );
         }
 
         // POST: Image/Delete/5

@@ -23,13 +23,7 @@ namespace ArtGallery.Controllers
         // GET: Pieces
         public ActionResult Index()
         {
-            string url = "PiecesData/GetPieceDtos";
-            HttpResponseMessage response = helper.doGetRequest( url );
-            if( !response.IsSuccessStatusCode ) {
-                return View( new List<ViewPiece>() );
-            }
-
-            IEnumerable<PieceDto> pieceDtos = response.Content.ReadAsAsync<IEnumerable<PieceDto>>().Result;
+            IEnumerable<PieceDto> pieceDtos = helper.getPieceDtos();
             List<ViewPiece> viewPieces = new List<ViewPiece>();
             foreach( PieceDto pieceDto in pieceDtos ) {
                 FormDto form = null;
