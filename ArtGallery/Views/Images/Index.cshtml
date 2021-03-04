@@ -4,54 +4,58 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Images</h2>
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="tableTitle">Images</h2>
 
-@if( Model.Count() == 0 ) {
+  @if( Model.Count() == 0 ) {
     <div class="messageDiv">There are no forms to display.</div>
-} else {
+  } else {
 
-    <table class="table">
+    <table class="basicTable">
+      <tr>
+        <th>
+          @Html.DisplayNameFor( model => model.imageName )
+        </th>
+        <th>
+          @Html.DisplayNameFor( model => model.imageExt )
+        </th>
+        <th>
+          @Html.DisplayNameFor( model => model.isMainImage )
+        </th>
+        <th></th>
+      </tr>
+
+      @foreach( var item in Model ) {
         <tr>
-            <th>
-                @Html.DisplayNameFor( model => model.imageName )
-            </th>
-            <th>
-                @Html.DisplayNameFor( model => model.imageExt )
-            </th>
-            <th>
-                @Html.DisplayNameFor( model => model.isMainImage )
-            </th>
-            <th></th>
+          <td>
+            @Html.DisplayFor( modelItem => item.imageName )
+          </td>
+          <td>
+            @Html.DisplayFor( modelItem => item.imageExt )
+          </td>
+          <td>
+            @Html.DisplayFor( modelItem => item.isMainImage )
+          </td>
+          <td class="actionsTd">
+            @Html.ActionLink( "Edit", "Edit", new {
+           id = item.imageId
+       } ) |
+            @Html.ActionLink( "Details", "Details", new {
+           id = item.imageId
+       } ) |
+            @Html.ActionLink( "Delete", "DeleteConfirm", new {
+           id = item.imageId
+       } )
+          </td>
         </tr>
-
-        @foreach( var item in Model ) {
-            <tr>
-                <td>
-                    @Html.DisplayFor( modelItem => item.imageName )
-                </td>
-                <td>
-                    @Html.DisplayFor( modelItem => item.imageExt )
-                </td>
-                <td>
-                    @Html.DisplayFor( modelItem => item.isMainImage )
-                </td>
-                <td>
-                    @Html.ActionLink( "Edit", "Edit", new {
-                   id = item.imageId
-               } ) |
-                    @Html.ActionLink( "Details", "Details", new {
-                   id = item.imageId
-               } ) |
-                    @Html.ActionLink( "Delete", "DeleteConfirm", new {
-                   id = item.imageId
-               } )
-                </td>
-            </tr>
-        }
+      }
 
     </table>
-}
+  }
 
-<div class="actionLinkDiv">
+  <div class="actionLinkDiv">
     @Html.ActionLink( "Go to Pieces List", "../Pieces" )
-</div>
+  </div>
+</main>
+

@@ -44,6 +44,11 @@ namespace ArtGallery.Controllers
             return Ok( getPieceDtoFromPiece( piece ) );
         }
 
+        public int GetLatestPieceId()
+        {
+            return db.pieces.Max( p => p.pieceId );
+        }
+
         private IEnumerable<Piece> getPieces()
         {
             List<Piece> pieces = db.pieces.ToList();
@@ -74,9 +79,9 @@ namespace ArtGallery.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PieceDto> GetPieceDtosForForm( int formId )
+        public IEnumerable<PieceDto> GetPieceDtosForForm( int id ) // id == formId
         {
-            IEnumerable<Piece> pieces = getPiecesForForm( formId );
+            IEnumerable<Piece> pieces = getPiecesForForm( id );
             return getPieceDtos( pieces );
         }
 

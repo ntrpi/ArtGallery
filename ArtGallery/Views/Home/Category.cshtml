@@ -1,0 +1,65 @@
+﻿@model ArtGallery.Models.ViewModels.ViewFormPieces
+
+@{
+    var formName = Model.formDto.formName;
+    if( formName == "Box" || formName == "Canvas" ) {
+      ViewBag.Title = formName + "es";
+    } else {
+      ViewBag.Title = formName + "s";
+    }
+}
+
+<main class="container body-content">
+  <div class="clearing"></div>
+  <div class="piecesDiv">
+    <div class="title">
+      <h1>@ViewBag.Title</h1>
+      <h2>Form description TODO</h2>
+    </div>
+    @{
+      var countPieces = 0;
+      var isDiv = false;
+    }
+    @foreach( var piece in Model.pieceDtos ) {
+      isDiv = countPieces % 4 == 0;
+      countPieces++;
+      if( isDiv ) {
+        <div class="pieces">
+          }
+          <div class="panel marRight30">
+            <div class="content">
+              @if( Model.imageDtos.ContainsKey( piece.pieceId ) ) {
+                var image = Model.imageDtos[ piece.pieceId ];
+                var source = image.imagesPath + image.imageName + "." + image.imageExt;
+
+                <div class="imgDiv">
+                  <img src="@source" height="150" />
+                </div>
+              } else {
+                <div style="height: 150px"></div>
+              }
+              <h3>@piece.pieceName</h3>
+              <p>@piece.pieceDescription</p>
+              @Html.ActionLink( "Details", "../Pieces/Details", new {
+                  id = piece.pieceId
+              } )
+            </div>
+          </div>
+          if( isDiv ) {
+        </div>
+      }
+    }
+
+
+    @*<div class="panel marRight30">
+        <div class="content">
+          <img src="images/img-10.jpg" />
+          <p><span>Project Name</span></p>
+          <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>
+          <a href="#">Details</a>
+        </div>
+      </div>*@
+
+  </div>
+
+</main>

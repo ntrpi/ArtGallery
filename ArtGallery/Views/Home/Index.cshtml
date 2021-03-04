@@ -1,30 +1,61 @@
-﻿@{
+﻿@model ArtGallery.Models.ViewModels.ViewFormsWithImage
+
+@{
     ViewBag.Title = "Home Page";
+    var formDtos = Model.formDtos;
 }
 
-<div class="jumbotron" style="background-color: #ff00ff7d">
-    <h1>Art Gallery</h1>
-    <p class="lead">HTTP 5204 Passion Project</p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Gallery</h2>
-        <p>
-            Looking for something beautiful, or at least interesting to look at? You&apos;ve come to the right place!
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Browse Gallery &raquo;</a></p>
+<main class="container body-content">
+  <div class="clearing"></div>
+  <div class="columnsDiv">
+    <div class="columns">
+      @foreach( var form in formDtos ) {
+        <div class="column">
+          <div class="title">
+            <h1>@form.formName</h1>
+          </div>
+          <div class="imgbg">
+            <div class="img">
+              @{
+                if( Model.imageDtos.ContainsKey( form.formId ) ) {
+                  var image = Model.imageDtos[ form.formId ];
+                  var source = image.imagesPath + image.imageName + "." + image.imageExt;
+
+                  <img src="@source" height="75" />
+                } else {
+                  <div style="height: 75px"></div>
+                }
+              }
+            </div>
+          </div>
+          <div class="actionLinkDiv">
+            @Html.ActionLink( "More", "Category", new {
+                id = form.formId
+            } )
+          </div>
+        </div>
+      }
     </div>
-    <div class="col-md-4">
-        <h2>Inventory - Admin Only</h2>
-        <p><a class="btn btn-default" href="/Pieces">Pieces &raquo;</a></p>
-        <p><a class="btn btn-default" href="/Forms">Forms &raquo;</a></p>
-        <p><a class="btn btn-default" href="/Images">Images &raquo;</a></p>
-        <!--
-            <p><a class="btn btn-default" href="/Image/List">Images &raquo;</a></p>
-            <p><a class="btn btn-default" href="/Media/List">Medias &raquo;</a></p>
-            <p><a class="btn btn-default" href="/Status/List">Statuses &raquo;</a></p>
-            <p><a class="btn btn-default" href="/Technique/List">Technique &raquo;</a></p>
-    -->
+  </div>
+
+  <div class="clearing"></div>
+
+  <div>
+    <h2>Inventory - Admin Only</h2>
+    <div class="actionLinkDiv">
+      <div class="buttonAction">
+        @Html.ActionLink( "Pieces", "../Pieces" )
+      </div>
+      <div class="buttonAction">
+        @Html.ActionLink( "Forms", "../Forms" )
+      </div>
+      <div class="buttonAction">
+        @Html.ActionLink( "Images", "../Images" )
+      </div>
     </div>
-</div>
+  </div>
+</main>
+
+
+

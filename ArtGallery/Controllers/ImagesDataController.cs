@@ -80,9 +80,9 @@ namespace ArtGallery.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ImageDto> GetImageDtosForPiece( int pieceId )
+        public IEnumerable<ImageDto> GetImageDtosForPiece( int id ) // id == pieceId
         {
-            IEnumerable<Image> images = getImagesForPiece( pieceId );
+            IEnumerable<Image> images = getImagesForPiece( id );
             return getImageDtos( images );
         }
 

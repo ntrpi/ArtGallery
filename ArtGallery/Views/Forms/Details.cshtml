@@ -4,23 +4,28 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Form</h4>
-    <hr />
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="tableTitle">Form</h2>
+
+  <div class="detailsTable">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.formName)
-        </dt>
+      <dt>
+        @Html.DisplayNameFor( model => model.formName )
+      </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.formName)
-        </dd>
-
+      <dd>
+        @Html.DisplayFor( model => model.formName )
+      </dd>
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.formId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+  </div>
+  <div class="actionLinkDiv">
+    @Html.ActionLink( "Back to List", "Index" )
+    <div class="buttonAction">
+      @Html.ActionLink( "Edit", "Edit", new {
+        id = Model.formId
+      } )
+    </div>
+  </div>
+</main>

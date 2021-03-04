@@ -4,44 +4,50 @@
     ViewBag.Title = "Art Gallery Forms";
 }
 
-<h2>Forms</h2>
 
-@if( Model.Count() == 0 ) {
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="tableTitle">Forms</h2>
+
+  @if( Model.Count() == 0 ) {
     <div class="messageDiv">There are no forms to display.</div>
-} else {
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor( model => model.formName )
-            </th>
-            <th></th>
-        </tr>
+  } else {
+    <table class="basicTable">
+      <tr>
+        <th>
+          @Html.DisplayNameFor( model => model.formName )
+        </th>
+        <th></th>
+      </tr>
 
-        @foreach( var item in Model ) {
-            <tr>
-                <td>
-                    @Html.DisplayFor( modelItem => item.formName )
-                </td>
-                <td>
-                    @Html.ActionLink( "Edit", "Edit", new {
-                        id = item.formId
-                    } ) |
-                    @Html.ActionLink( "Details", "Details", new {
-                        id = item.formId
-                    } ) |
-                    @Html.ActionLink( "Delete", "DeleteConfirm", new {
-                        id = item.formId
-                    } )
-                </td>
-            </tr>
-        }
+      @foreach( var item in Model ) {
+        <tr>
+          <td>
+            @Html.DisplayFor( modelItem => item.formName )
+          </td>
+          <td class="actionsTd">
+            @Html.ActionLink( "Edit", "Edit", new {
+                id = item.formId
+            } ) |
+            @Html.ActionLink( "Details", "Details", new {
+                id = item.formId
+            } ) |
+            @Html.ActionLink( "Delete", "DeleteConfirm", new {
+                id = item.formId
+            } )
+          </td>
+        </tr>
+      }
 
     </table>
-}
+  }
 
-<div class="actionLinksDiv">
+</main>
+
+
+  <div class="actionLinksDiv">
     <div class="buttonAction">
-        @Html.ActionLink( "Add New Form", "Create" )
+      @Html.ActionLink( "Add New Form", "Create" )
     </div>
-</div>
+  </div>
 

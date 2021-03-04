@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -35,16 +35,17 @@ textarea {
 }
 
 .buttonAction {
-    border: 1px solid darkGrey;
-    border-radius: 5%;
-    background-color: gainsboro;
-    padding: .4em 1.2em;
-    display: inline-block;
+  border: 1px solid #576679;
+  background-color: #576679;
+  padding: .4em 1.2em;
+  display: inline-block;
+  margin: 0 .5em;
 }
 
 .buttonAction a {
     text-decoration: none;
-    color: black;
+    color: #ddd;
+    text-transform: uppercase;
 }
 
 /* Buttons to look like Action Links*/
@@ -53,11 +54,11 @@ textarea {
 }
 
 .buttonLikeAction {
-    border: 1px solid darkGrey;
-    border-radius: 5%;
-    background-color: gainsboro;
-    padding: .5em 1.2em;
-    color: black;
+  border: 1px solid #576679;
+  background-color: #576679;
+  padding: .5em 1.2em;
+  color: #ddd;
+  text-transform: uppercase;
 }
 
 /* Message div */

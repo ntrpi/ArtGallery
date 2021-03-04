@@ -4,32 +4,34 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Image for @Model.pieceDto.pieceName</h2>
-<hr />
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2>Image for @Model.pieceDto.pieceName</h2>
 
-<div>
+  <div>
     <div class="featuredImageDivParent" style="display: inline-block">
-        <div class="featuredImageDiv">
-            @{
-                var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
-            }
-            <img src="@source" />
+      <div class="featuredImageDiv">
+        @{
+          var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+        }
+        <img src="@source" />
+      </div>
+      <div class="actionLinkDiv">
+        <div class="buttonAction" style="float: right">
+          @Html.ActionLink( "Edit", "Edit", new {
+              id = Model.imageDto.imageId
+          } )
         </div>
-        <div class="actionLinkDiv">
-            <div class="buttonAction" style="float: right">
-                @Html.ActionLink( "Edit", "Edit", new {
-                    id = Model.imageDto.imageId
-                } )
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="actionLinkDiv">
-        @Html.ActionLink( "Back to Images List", "Index", new {
-            id = Model.pieceDto.pieceId
-        } ) |
-        @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
-            id = Model.pieceDto.pieceId
-        } )
-    </div>
-</div>
+  </div>
+  <div class="actionLinkDiv">
+    @Html.ActionLink( "Back to Images List", "Index", new {
+        id = Model.pieceDto.pieceId
+    } ) |
+    @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
+        id = Model.pieceDto.pieceId
+    } )
+  </div>
+</main>
 

@@ -53,7 +53,6 @@ namespace ArtGallery.Controllers
         }
 
         
-
         public FormDto getFormDto( HttpResponseMessage response )
         {
             if( !response.IsSuccessStatusCode ) {
@@ -93,6 +92,32 @@ namespace ArtGallery.Controllers
             return pieceDto;
         }
 
+        public IEnumerable<PieceDto> getPieceDtosForForm( int id )
+        {
+            HttpResponseMessage response = doGetRequest( "PiecesData/GetPieceDtosForForm/" + id );
+            if( !response.IsSuccessStatusCode ) {
+                return new List<PieceDto>();
+            }
+            IEnumerable<PieceDto> pieceDtos = response.Content.ReadAsAsync<IEnumerable<PieceDto>>().Result;
+            return pieceDtos;
+        }
+
+        public PieceDto getLatestPieceDtoForForm( int id )
+        {
+            IEnumerable<PieceDto> pieceDtos = getPieceDtosForForm( id );
+            PieceDto pieceDto = null;
+            foreach( var piece in pieceDtos ) {
+                if( pieceDto == null ) {
+                    pieceDto = piece;
+                    continue;
+                }
+                if( piece.pieceId > pieceDto.pieceId ) {
+                    pieceDto = piece;
+                }
+            }
+            return pieceDto;
+        }
+
         public IEnumerable<PieceDto> getPieceDtos()
         {
             string url = "PiecesData/GetPieceDtos";
@@ -113,6 +138,23 @@ namespace ArtGallery.Controllers
             string jsonContent = response.Content.ReadAsStringAsync().Result;
             ImageDto imageDto = jss.Deserialize<ImageDto>( jsonContent );
             return imageDto;
+        }
+
+        public ImageDto getPrimaryImageDtoForPiece( int pieceId )
+        {
+            IEnumerable<ImageDto> imagesForPiece = getImageDtos( pieceId );
+            ImageDto primaryImage = null;
+            foreach( var image in imagesForPiece ) {
+                if( primaryImage == null ) {
+                    primaryImage = image;
+                    continue;
+                }
+                if( image.isMainImage ) {
+                    primaryImage = image;
+                    break;
+                }
+            }
+            return primaryImage;
         }
 
         public ImageDto getImageDto( int imageId )
