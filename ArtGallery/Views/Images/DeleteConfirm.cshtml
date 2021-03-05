@@ -1,48 +1,56 @@
 ﻿@model ArtGallery.Models.ViewModels.ViewImage
 
 @{
-    ViewBag.Title = "Delete";
+  ViewBag.Title = "Delete";
 }
 
-<h2>Image for @Model.pieceDto.pieceName</h2>
-<hr />
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="titleStyle">Image for @Model.pieceDto.pieceName</h2>
+  <h3 class="h3Style">Are you sure you want to delete this image?</h3>
 
-<h3>Are you sure you want to delete this image?</h3>
-<hr />
-<div>
-    <div>
-        <div class="featuredImageDivParent">
-            <div class="featuredImageDiv">
-                @{
-                    var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
-                }
-                <img src="@source" />
-            </div>
-        </div>
+  <div class="detailsTable">
+    <dl class="detailsTableDl">
+      <dt>
+        @Html.DisplayNameFor( model => model.imageDto.imageName )
+      </dt>
+
+      <dd>
+        @Html.DisplayFor( model => model.imageDto.imageName )
+      </dd>
+    </dl>
+  </div>
+
+  <div class="imageDetailsParent" style="display: inline-block">
+    <div class="imageDetails">
+      @{
+        var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+      }
+      <img src="@source" />
     </div>
-
     @using( Html.BeginForm( "Delete", "Images", new {
-        id = Model.imageDto.imageId    
+      id = Model.imageDto.imageId
     } ) ) {
-        @Html.AntiForgeryToken()
+      @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <div class="actionLinkDiv">
-                <input type="submit" value="Delete" class="basicButton" />
-                <span class="buttonAction">
-                    @Html.ActionLink( "Cancel", "Details", new {
-                        id = Model.imageDto.imageId
-                    } )
-                </span>
-            </div>
+      <div class="form-actions no-color">
+        <div class="actionLinkDiv">
+          <input type="submit" value="Delete" class="basicButton" />
+          <span class="buttonAction">
+            @Html.ActionLink( "Cancel", "Details", new {
+                id = Model.imageDto.imageId
+            } )
+          </span>
         </div>
+      </div>
     }
-</div>
-<div class="actionLinkDiv">
+  </div>
+  <div class="actionLinkDiv">
     @Html.ActionLink( "Back to Images List", "Index", new {
         id = Model.pieceDto.pieceId
     } ) |
     @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
         id = Model.pieceDto.pieceId
     } )
-</div>
+  </div>
+</main>

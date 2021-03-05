@@ -17,48 +17,47 @@
       <h2>Form description TODO</h2>
     </div>
     @{
-      var countPieces = 0;
-      var isDiv = false;
+        var countPieces = 0;
+        var endOfPieces = Model.pieceDtos.Count() - 1;
     }
-    @foreach( var piece in Model.pieceDtos ) {
-      isDiv = countPieces % 4 == 0;
-      countPieces++;
-      if( isDiv ) {
-        <div class="pieces">
-          }
-          <div class="panel marRight30">
-            <div class="content">
-              @if( Model.imageDtos.ContainsKey( piece.pieceId ) ) {
-                var image = Model.imageDtos[ piece.pieceId ];
-                var source = image.imagesPath + image.imageName + "." + image.imageExt;
 
-                <div class="imgDiv">
-                  <img src="@source" height="150" />
-                </div>
-              } else {
-                <div style="height: 150px"></div>
-              }
-              <h3>@piece.pieceName</h3>
-              <p>@piece.pieceDescription</p>
-              @Html.ActionLink( "Details", "../Pieces/Details", new {
-                  id = piece.pieceId
-              } )
+    @foreach( var piece in Model.pieceDtos ) {
+      var startDiv = countPieces % 4 == 0 ? "<div class=\"pieces\">" : "";
+      var endDiv = countPieces % 4 == 3 || countPieces == endOfPieces ? "</div>" : "";
+
+      @Html.Raw( startDiv );
+      <div class="panel marRight30">
+        <div class="content">
+          @if( Model.imageDtos.ContainsKey( piece.pieceId ) ) {
+            var image = Model.imageDtos[ piece.pieceId ];
+            var source = image.imagesPath + image.imageName + "." + image.imageExt;
+
+            <div class="imgDiv">
+              <img src="@source" height="150" />
             </div>
-          </div>
-          if( isDiv ) {
+          } else {
+            <div style="height: 150px"></div>
+          }
+          <h3>@piece.pieceName</h3>
+          <p>@piece.pieceDescription</p>
+          @Html.ActionLink( "Details", "../Pieces/Details", new {
+            id = piece.pieceId
+          } )
         </div>
-      }
+      </div>
+      @Html.Raw( endDiv );
+      countPieces++;
     }
 
 
     @*<div class="panel marRight30">
-        <div class="content">
-          <img src="images/img-10.jpg" />
-          <p><span>Project Name</span></p>
-          <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>
-          <a href="#">Details</a>
-        </div>
-      </div>*@
+      <div class="content">
+        <img src="images/img-10.jpg" />
+        <p><span>Project Name</span></p>
+        <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>
+        <a href="#">Details</a>
+      </div>
+    </div>*@
 
   </div>
 

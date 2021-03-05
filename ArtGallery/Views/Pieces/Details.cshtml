@@ -1,4 +1,4 @@
-﻿@model ArtGallery.Models.ViewModels.ViewPiece
+﻿@model ArtGallery.Models.ViewModels.ViewPieceWithImages
 
 @{
     ViewBag.Title = "Details";
@@ -6,77 +6,107 @@
 
 <main class="container body-content">
   <div class="clearing"></div>
-  <h2 class="tableTitle">@Model.pieceDto.pieceName</h2>
+  <h2 class="titleStyle">@Model.pieceDto.pieceName</h2>
 
-  <div class="detailsTable">
-    <dl class="dl-horizontal">
-      <dt>
-        @Html.DisplayNameFor( model => model.pieceDto.pieceDescription )
-      </dt>
+  <div>
+    <div class="detailsTable">
+      <dl class="detailsTableDl">
+        <dt>
+          @Html.DisplayNameFor( model => model.pieceDto.pieceDescription )
+        </dt>
 
-      <dd>
-        @Html.DisplayFor( model => model.pieceDto.pieceDescription )
-      </dd>
+        <dd>
+          @Html.DisplayFor( model => model.pieceDto.pieceDescription )
+        </dd>
 
-      <dt>
-        @Html.DisplayNameFor( model => model.formDto.formName )
-      </dt>
+        <dt>
+          @Html.DisplayNameFor( model => model.formDto.formName )
+        </dt>
 
-      <dd>
-        @if( Model.formDto == null ) {
-          <span>None</span>
-        } else {
-          @Html.DisplayFor( model => model.formDto.formName )
-        }
-      </dd>
+        <dd>
+          @if( Model.formDto == null ) {
+            <span>None</span>
+          } else {
+            @Html.DisplayFor( model => model.formDto.formName )
+          }
+        </dd>
 
-      <dt>
-        @Html.DisplayNameFor( model => model.pieceDto.length )
-      </dt>
+        <dt>
+          @Html.DisplayNameFor( model => model.pieceDto.length )
+        </dt>
 
-      <dd>
-        @Html.DisplayFor( model => model.pieceDto.length )
-      </dd>
+        <dd>
+          @Html.DisplayFor( model => model.pieceDto.length )
+        </dd>
 
-      <dt>
-        @Html.DisplayNameFor( model => model.pieceDto.width )
-      </dt>
+        <dt>
+          @Html.DisplayNameFor( model => model.pieceDto.width )
+        </dt>
 
-      <dd>
-        @Html.DisplayFor( model => model.pieceDto.width )
-      </dd>
+        <dd>
+          @Html.DisplayFor( model => model.pieceDto.width )
+        </dd>
 
-      <dt>
-        @Html.DisplayNameFor( model => model.pieceDto.height )
-      </dt>
+        <dt>
+          @Html.DisplayNameFor( model => model.pieceDto.height )
+        </dt>
 
-      <dd>
-        @Html.DisplayFor( model => model.pieceDto.height )
-      </dd>
+        <dd>
+          @Html.DisplayFor( model => model.pieceDto.height )
+        </dd>
 
-      <dt>
-        @Html.DisplayNameFor( model => model.pieceDto.piecePrice )
-      </dt>
+        <dt>
+          @Html.DisplayNameFor( model => model.pieceDto.piecePrice )
+        </dt>
 
-      <dd>
-        @Html.DisplayFor( model => model.pieceDto.piecePrice )
-      </dd>
+        <dd>
+          @Html.DisplayFor( model => model.pieceDto.piecePrice )
+        </dd>
 
-    </dl>
+      </dl>
+    </div>
+
+    @if( Model.imageDtos != null && Model.imageDtos.Count() > 0 ) {
+      var countImages = 0;
+      var endOfImages = Model.imageDtos.Count() - 1;
+
+      foreach( var image in Model.imageDtos ) {
+        var startDiv = countImages % 4 == 0 ? "<div class=\"pieces\">" : "";
+        var endDiv = countImages % 4 == 3 || countImages == endOfImages ? "</div>" : "";
+        countImages++;
+
+        @Html.Raw( startDiv );
+        <div class="panel marRight30">
+          <div class="content">
+            @{
+              var source = image.imagesPath + image.imageName + "." + image.imageExt;
+
+              <div class="imgDiv">
+                <a href="../../Images/Details/@image.imageId">
+                  <img src="@source" height="150" />
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+        @Html.Raw( endDiv );
+      }
+    }
+    <div class="actionLinkDiv">
+      <div class="buttonAction">
+        @Html.ActionLink( "Edit", "Edit", new {
+            id = Model.pieceDto.pieceId
+        } )
+      </div> |
+      <div class="buttonAction">
+        @Html.ActionLink( "Add New Image", "../Images/Create", new {
+            id = Model.pieceDto.pieceId
+        } )
+      </div>
+    </div>
   </div>
   <div class="actionLinkDiv">
     @Html.ActionLink( "Back to List", "Index" ) |
-    <div class="buttonAction">
-      @Html.ActionLink( "Edit", "Edit", new {
-          id = Model.pieceDto.pieceId
-      } )
-    </div> |
-    <div class="buttonAction">
-      @Html.ActionLink( "Add New Image", "../Images/Create", new {
-          id = Model.pieceDto.pieceId
-      } )
-    </div>
-
   </div>
 </main>
 

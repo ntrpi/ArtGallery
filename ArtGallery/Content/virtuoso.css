@@ -829,6 +829,58 @@ CONTACT FORM CLASSS
         color: #282623;
       }
 
+
+/********************** My stuff ************************/
+
+/* Action Links */
+.actionLinkDiv {
+  padding: 1em;
+}
+
+  .actionLinkDiv a {
+    padding: .25em;
+    color: #ddd;
+  }
+
+    .actionLinkDiv a:hover {
+      color: #b8588c;
+    }
+
+.buttonAction {
+  border: 1px solid #576679;
+  background-color: #576679;
+  padding: .4em 1.2em;
+  display: inline-block;
+  margin: 0 .5em;
+}
+
+  .buttonAction a {
+    text-decoration: none;
+    color: #ddd;
+    text-transform: uppercase;
+  }
+
+/* Buttons to look like Action Links*/
+.buttonLikeActionDiv {
+  padding: 1em;
+}
+
+.buttonLikeAction {
+  border: 1px solid #576679;
+  background-color: #576679;
+  padding: .5em 1.2em;
+  color: #ddd;
+  text-transform: uppercase;
+}
+
+/* Message div */
+
+.messageDiv {
+  font-size: 1.2em;
+  padding: 1em;
+}
+
+
 .piecesDiv .title {
     text-align: center;
     padding-bottom: 2em;
@@ -904,7 +956,7 @@ CONTACT FORM CLASSS
         padding-bottom: 10px;
       }
 
-.tableTitle {
+.titleStyle {
   font-size: 1.6em;
   font-weight: normal;
   padding-bottom: 1em;
@@ -914,10 +966,32 @@ CONTACT FORM CLASSS
   color: #b8588c;
 }
 
+.h3Style {
+  color: #ddd;
+  font-size: 1.2em;
+  padding-bottom: 1.5em;
+  margin-left: 3em;
+}
+
 .detailsTable {
   color: #ddd;
   margin: 0 3em 1.5em 3em;
 }
+
+.detailsTableDl dt {
+  float: left;
+  width: 100px;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailsTableDl dd {
+  margin-left: 120px;
+}
+
 
 .basicTable {
   color: #ddd;
@@ -981,16 +1055,43 @@ CONTACT FORM CLASSS
     }
 
 .basicButton {
-  padding: 8px;
+  padding: .5em 1.2em;
   background: #b8588c;
   text-transform: uppercase;
   font-family: "Trebuchet MS";
   color: #fff;
   border: 0px solid;
-  margin-left: 100px;
+  margin-left: 1em;
   margin-top: 20px;
 }
 
+.imageDetailsParent {
+    margin-left: 3em;
+    margin-bottom: 2em;
+}
+
+.imageDetails {
+  background: #26313f;
+  margin-bottom: 30px;
+  display: inline-block;
+}
+
+.imageDetails img {
+  padding: 8px;
+  width: 254px;
+}
+
+
+.customFileInput input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
 
 .address {
   padding: 30px;

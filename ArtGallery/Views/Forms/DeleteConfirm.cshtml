@@ -4,29 +4,37 @@
     ViewBag.Title = "DeleteConfirm";
 }
 
-<h2>Confirm Delete</h2>
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="titleStyle">Delete</h2>
+  <h3 class="h3Style">Are you sure you want to delete this piece?</h3>
 
-<div>
-    <h3>Are you sure you want to delete this form?</h3>
-    <dl class="dl-horizontal">
+  <div class="detailsTable">
+      <dl class="detailsTableDl">
         <dt>
-            @Html.DisplayNameFor( model => model.formName )
+          @Html.DisplayNameFor( model => model.formName )
         </dt>
 
         <dd>
-            @Html.DisplayFor( model => model.formName )
+          @Html.DisplayFor( model => model.formName )
         </dd>
+      </dl>
 
-    </dl>
-
-    @using( Html.BeginForm( "Delete", "Forms", new {
+      @using( Html.BeginForm( "Delete", "Forms", new {
         id = Model.formId
-    } ) ) {
+      } ) ) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="basicButton" /> |
-            @Html.ActionLink( "Back to List", "Index" )
+          <input type="submit" value="Delete" class="basicButton" />
+          <div class="actionLinkDiv" style="display: inline-block">
+            <div class="buttonAction">
+              @Html.ActionLink( "Cancel", "Details", new {
+                id = Model.formId
+              } )
+            </div>
+          </div>
         </div>
-    }
-</div>
+      }
+  </div>
+</main>

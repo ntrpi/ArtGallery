@@ -4,32 +4,44 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit Image for @Model.pieceDto.pieceName</h2>
+<main class="container body-content">
+  <div class="clearing"></div>
+  <h2 class="titleStyle">Edit Image for @Model.pieceDto.pieceName</h2>
 
-@using( Html.BeginForm( "Edit", "Images", new {
-    id = Model.imageDto.imageId
-}, FormMethod.Post, new {
-    enctype = "multipart/form-data"
-} ) ) {
-    @Html.AntiForgeryToken()
+  <div class="imageDetailsParent" style="display: inline-block">
+    <div class="imageDetails">
+      @{
+        var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+      }
+      <img src="@source" />
+    </div>
+  </div>
 
-<div class="form-horizontal">
+  <div class="detailsTable">
+    @using( Html.BeginForm( "Edit", "Images", new {
+      id = Model.imageDto.imageId
+    }, FormMethod.Post, new {
+      enctype = "multipart/form-data"
+    } ) ) {
+      @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary( true, "", new {
-        @class = "text-danger"
-    } )
-    @Html.HiddenFor( model => model.imageDto.imageId, new {
-        Name = "imageId"
-    } )
-    <input style="display: none" type="text" name="imageExt" value="@Model.imageDto.imageExt" />
-    <input style="display: none" type="number" name="pieceId" value="@Model.imageDto.pieceId" />
-    <input style="display: none" type="text" name="imageOldName" value="@Model.imageDto.imageOldName" />
+      <div class="form-horizontal">
 
-    <div class="form-group">
-        @Html.LabelFor( model => model.imageDto.imageName, htmlAttributes: new {
-            @class = "control-label col-md-2"
+        @Html.ValidationSummary( true, "", new {
+            @class = "text-danger"
         } )
-        <div class="col-md-10">
+        @Html.HiddenFor( model => model.imageDto.imageId, new {
+            Name = "imageId"
+        } )
+        <input style="display: none" type="text" name="imageExt" value="@Model.imageDto.imageExt" />
+        <input style="display: none" type="number" name="pieceId" value="@Model.imageDto.pieceId" />
+        <input style="display: none" type="text" name="imageOldName" value="@Model.imageDto.imageOldName" />
+
+        <div class="form-group">
+          @Html.LabelFor( model => model.imageDto.imageName, htmlAttributes: new {
+              @class = "control-label col-md-2"
+          } )
+          <div class="col-md-10">
             @Html.EditorFor( model => model.imageDto.imageName, new {
                 htmlAttributes = new {
                     @class = "form-control", Name = "imageName"
@@ -38,23 +50,26 @@
             @Html.ValidationMessageFor( model => model.imageDto.imageName, "", new {
                 @class = "text-danger"
             } )
+          </div>
         </div>
-    </div>
-</div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <span class="actionLinkDiv buttonAction">
-                @Html.ActionLink( "Cancel", "Details", new {
-                    id = Model.imageDto.imageId
-                } )
-            </span>
-            <input type="submit" value="Save" class="basicButton" />
+          <span class="actionLinkDiv buttonAction">
+            @Html.ActionLink( "Cancel", "Details", new {
+                id = Model.imageDto.imageId
+            } )
+          </span>
+          <input type="submit" value="Save" class="basicButton" />
         </div>
-    </div>
-}
-
-
-
-<div class="actionLinkDiv">
+      </div>
+    }
+  </div>
+  <div class="actionLinkDiv">
     @Html.ActionLink( "Back to Images List", "Index" )
-</div>
+  </div>
+</main>
+
+
+
+

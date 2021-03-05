@@ -56,9 +56,9 @@ namespace ArtGallery.Controllers
             return images;
         }
 
-        private IEnumerable<Image> getImagesForPiece( int imageId )
+        private IEnumerable<Image> getImagesForPiece( int pieceId )
         {
-            List<Image> images = db.images.Where( i => i.imageId == imageId ).ToList();
+            List<Image> images = db.images.Where( i => i.pieceId == pieceId ).ToList();
             return images;
         }
 

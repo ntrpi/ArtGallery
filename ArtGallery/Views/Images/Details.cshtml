@@ -6,22 +6,37 @@
 
 <main class="container body-content">
   <div class="clearing"></div>
-  <h2>Image for @Model.pieceDto.pieceName</h2>
+  <h2 class="titleStyle">Image for @Model.pieceDto.pieceName</h2>
 
-  <div>
-    <div class="featuredImageDivParent" style="display: inline-block">
-      <div class="featuredImageDiv">
-        @{
-          var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
-        }
-        <img src="@source" />
+  <div class="detailsTable">
+    <dl class="detailsTableDl">
+      <dt>
+        @Html.DisplayNameFor( model => model.imageDto.imageName )
+      </dt>
+
+      <dd>
+        @Html.DisplayFor( model => model.imageDto.imageName )
+      </dd>
+    </dl>
+  </div>
+
+  <div class="imageDetailsParent" style="display: inline-block">
+    <div class="imageDetails">
+      @{
+        var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
+      }
+      <img src="@source" />
+    </div>
+    <div class="actionLinkDiv">
+      <div class="buttonAction" style="float: right">
+        @Html.ActionLink( "Edit", "Edit", new {
+            id = Model.imageDto.imageId
+        } )
       </div>
-      <div class="actionLinkDiv">
-        <div class="buttonAction" style="float: right">
-          @Html.ActionLink( "Edit", "Edit", new {
-              id = Model.imageDto.imageId
-          } )
-        </div>
+      <div class="buttonAction" style="float: right">
+        @Html.ActionLink( "Delete", "DeleteConfirm", new {
+            id = Model.imageDto.imageId
+        } )
       </div>
     </div>
   </div>

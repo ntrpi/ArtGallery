@@ -193,6 +193,16 @@ namespace ArtGallery.Controllers
             return getViewPiece( pieceDto );
         }
 
+        public ViewPieceWithImages getViewPieceWithImages( int id )
+        {
+            ViewPieceWithImages viewPieceWithImages = new ViewPieceWithImages();
+            viewPieceWithImages.pieceDto = getPieceDto( id );
+            viewPieceWithImages.formDto = getFormDto( (int) viewPieceWithImages.pieceDto.formId );
+            viewPieceWithImages.imageDtos = getImageDtos( id );
+            return viewPieceWithImages;
+        }
+
+
         public UpdatePiece getUpdatePiece( PieceDto pieceDto )
         {
             UpdatePiece viewPiece = new UpdatePiece();

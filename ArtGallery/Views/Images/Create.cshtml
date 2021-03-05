@@ -3,47 +3,55 @@
 @Scripts.Render( "~/bundles/jquery" )
 @Scripts.Render( "~/bundles/jqueryval" )
 
-
-@{
+<main class="container body-content">
+  <div class="clearing"></div>
+  @{
     // The attribute enctype="multipart/form-data" is required
     // if you are sending files as part of the HTTP POST request
     // Must have it to upload images!!!
     if( ViewBag.errorMessage != null ) {
-        <h2>@ViewBag.errorMessage</h2>
+      <h2>@ViewBag.errorMessage</h2>
     } else {
-        <h2>Add Image for @Model.pieceDto.pieceName</h2>
+      <h2 class="titleStyle">Add Image for @Model.pieceDto.pieceName</h2>
     }
-}
-
-@using( Html.BeginForm( "Create", "Images", new {
+  }
+  @using( Html.BeginForm( "Create", "Images", new {
     id = Model.pieceDto.pieceId
-}, FormMethod.Post, new {
+  }, FormMethod.Post, new {
     enctype = "multipart/form-data"
-} ) ) {
+  } ) ) {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <div class="col-md-6">
-            <div class="form-group" style="padding: 1em">
-                <div class="col-md-12">
-                    <input type="file" name="imageData" style="padding: 1em" />
-                </div>
-            </div>
-        </div>
+      <div class="col-md-6">
+        <div class="form-group" style="padding: 1em">
+          <div class="col-md-12 ">
+            <input type="file" name="imageData" value="Choose an Image" class="basicButton" />
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 buttonLikeActionDiv">
-                <input type="submit" value="Add Image" class="buttonLikeAction" />
-            </div>
+            @*<label for="imageData" class="basicButton">Choose an Image</label>
+            <input id="imageData" name="imageData" type="file" />*@
+          </div>
         </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 buttonLikeActionDiv">
+          <input type="submit" value="Add Image" class="buttonLikeAction" />
+        </div>
+      </div>
     </div>
-}
+  }
 
-<div class="actionLinkDiv">
+  <div class="actionLinkDiv">
     @Html.ActionLink( "Back to Images", "Images", new {
         id = Model.pieceDto.pieceId
     } ) |
     @Html.ActionLink( "Back to Piece", "../Pieces/Details", new {
         id = Model.pieceDto.pieceId
     } )
-</div>
+  </div>
+
+</main>
+
+
+

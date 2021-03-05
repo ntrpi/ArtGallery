@@ -42,7 +42,7 @@ namespace ArtGallery.Controllers
         // GET: Pieces/Details/5
         public ActionResult Details( int id )
         {
-            return View( helper.getViewPiece( id ) );
+            return View( helper.getViewPieceWithImages( id ) );
         }
 
         // GET: Pieces/Create
@@ -88,9 +88,9 @@ namespace ArtGallery.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( [Bind( Include = "pieceId,pieceName,pieceDescription,length,width,height,piecePrice,formId" )] Piece piece )
+        public ActionResult Edit( int id, Piece piece )
         {
-            string url = "PiecesData/UpdatePiece/" + piece.pieceId;
+            string url = "PiecesData/UpdatePiece/" + id;
             HttpResponseMessage response = helper.doPostRequest( url, piece );
             if( !response.IsSuccessStatusCode ) {
                 ViewBag.errorMessage = "Unable to update " + piece.pieceName;

@@ -7,10 +7,10 @@
 
 <main class="container body-content">
   <div class="clearing"></div>
-  <h2 class="tableTitle">Form</h2>
+  <h2 class="titleStyle">Form</h2>
 
   <div class="detailsTable">
-    <dl class="dl-horizontal">
+    <dl class="detailsTableDl">
       <dt>
         @Html.DisplayNameFor( model => model.formName )
       </dt>
@@ -21,11 +21,18 @@
     </dl>
   </div>
   <div class="actionLinkDiv">
-    @Html.ActionLink( "Back to List", "Index" )
+    <div class="buttonAction">
+      @Html.ActionLink( "Delete", "DeleteConfirm", new {
+        id = Model.formId
+      } )
+    </div>
     <div class="buttonAction">
       @Html.ActionLink( "Edit", "Edit", new {
         id = Model.formId
       } )
     </div>
+  </div>
+  <div class="actionLinkDiv">
+    @Html.ActionLink( "Back to List", "Index" )
   </div>
 </main>
