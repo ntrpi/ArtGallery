@@ -55,6 +55,7 @@ namespace ArtGallery.Controllers
             try {
                 imagecontent = new StreamContent( imageData.InputStream );
             } catch( Exception e ) {
+                Debug.WriteLine( e );
                 UpdateImage updateImage = helper.getUpdateImage( id );
                 ViewBag.errorMessage = "Please choose an image for " + updateImage.pieceDto.pieceName + ".";
                 return View( updateImage );
