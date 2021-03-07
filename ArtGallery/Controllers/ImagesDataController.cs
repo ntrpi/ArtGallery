@@ -55,7 +55,7 @@ namespace ArtGallery.Controllers
             List<Image> images = db.images.ToList();
             return images;
         }
-
+        
         private IEnumerable<Image> getImagesForPiece( int pieceId )
         {
             List<Image> images = db.images.Where( i => i.pieceId == pieceId ).ToList();
@@ -92,7 +92,6 @@ namespace ArtGallery.Controllers
             return imagePath;
         }
 
-        // PUT: api/ImagesData/5
         [HttpPost]
         public IHttpActionResult UpdateImage( int id, [FromBody] Image image )
         {
@@ -107,21 +106,46 @@ namespace ArtGallery.Controllers
             string imageOldName = image.imageOldName;
             image.imageOldName = image.imageName;
 
+            // Try to update the database.
             try {
                 db.Entry( image ).State = EntityState.Modified;
                 db.SaveChanges();
-
-                // Update the local file.
-                string oldPath = getImageLocalPath( imageOldName, image.imageExt );
-                string newPath = getImageLocalPath( image.imageName, image.imageExt );
-                System.IO.File.Move( oldPath, newPath );
-
-            } catch( DbUpdateConcurrencyException ) {
+            } catch( DbUpdateConcurrencyException e ) {
+                Debug.WriteLine( e.Message );
+                Debug.WriteLine( e );
                 if( !ImageExists( id ) ) {
                     return NotFound();
                 } else {
                     throw;
                 }
+            }
+
+            try {
+                // Try to move the image file. Do not overwrite the file if it already exists.
+                string oldPath = getImageLocalPath( imageOldName, image.imageExt );
+                string newPath = getImageLocalPath( image.imageName, image.imageExt );
+                File.Copy( oldPath, newPath, false );
+
+            } catch( IOException e ) {
+                Debug.WriteLine( e.Message );
+                Debug.WriteLine( e );
+
+                // If we couldn't move the file, we need to undo the changes to the database.
+                image.imageOldName = imageOldName;
+                // Try to update the database.
+                try {
+                    db.Entry( image ).State = EntityState.Modified;
+                    db.SaveChanges();
+                } catch( DbUpdateConcurrencyException duce ) {
+                    Debug.WriteLine( duce.Message );
+                    Debug.WriteLine( duce );
+                    if( !ImageExists( id ) ) {
+                        return NotFound();
+                    } else {
+                        throw;
+                    }
+                }
+                return NotFound();
             }
 
             return Ok( id );

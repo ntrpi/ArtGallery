@@ -911,6 +911,7 @@ CONTACT FORM CLASSS
     border: none;
     background: #26313f;
     margin-bottom: 30px;
+    position: relative;
   }
 
     .pieces .panel .content {
@@ -941,6 +942,10 @@ CONTACT FORM CLASSS
         font-weight: normal;
         font-size: 13px;
         text-transform: uppercase;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: .5em;
       }
 
         .pieces .panel .content a:hover {
@@ -953,6 +958,29 @@ CONTACT FORM CLASSS
       }
 
       .pieces .panel .content img {
+        padding-bottom: 10px;
+      }
+
+  .images .panel {
+    display: inline-block;
+    width: 300px;
+    border: none;
+    background: #26313f;
+    margin-bottom: 30px;
+  }
+
+    .images .panel .content {
+      padding: 10px;
+      padding-bottom: 20px;
+    }
+
+      .images .panel .imgDiv {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .images .panel img {
+        max-width: 280px;
         padding-bottom: 10px;
       }
 
@@ -1061,11 +1089,11 @@ CONTACT FORM CLASSS
   font-family: "Trebuchet MS";
   color: #fff;
   border: 0px solid;
-  margin-left: 1em;
-  margin-top: 20px;
+  margin: 0 .5em;
 }
 
 .imageDetailsParent {
+    display: inline-block;
     margin-left: 3em;
     margin-bottom: 2em;
 }
@@ -1078,7 +1106,7 @@ CONTACT FORM CLASSS
 
 .imageDetails img {
   padding: 8px;
-  width: 254px;
+  height: 600px;
 }
 
 

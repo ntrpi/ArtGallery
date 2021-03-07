@@ -20,7 +20,7 @@
     </dl>
   </div>
 
-  <div class="imageDetailsParent" style="display: inline-block">
+  <div class="imageDetailsParent">
     <div class="imageDetails">
       @{
         var source = Model.imageDto.imagesPath + Model.imageDto.imageName + "." + Model.imageDto.imageExt;
@@ -41,10 +41,10 @@
     </div>
   </div>
   <div class="actionLinkDiv">
-    @Html.ActionLink( "Back to Images List", "Index", new {
+    @Html.ActionLink( "Images List", "Index", new {
         id = Model.pieceDto.pieceId
     } ) |
-    @Html.ActionLink( "Go to Piece", "../Pieces/Details", new {
+    @Html.ActionLink( "Piece Details", "../Pieces/Details", new {
         id = Model.pieceDto.pieceId
     } )
   </div>

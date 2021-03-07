@@ -91,6 +91,8 @@ namespace ArtGallery.Controllers
         public ActionResult Edit( int id, Piece piece )
         {
             string url = "PiecesData/UpdatePiece/" + id;
+            // No idea why this isn't being set.
+            piece.pieceId = id;
             HttpResponseMessage response = helper.doPostRequest( url, piece );
             if( !response.IsSuccessStatusCode ) {
                 ViewBag.errorMessage = "Unable to update " + piece.pieceName;

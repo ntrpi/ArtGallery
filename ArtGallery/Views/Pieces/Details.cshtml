@@ -71,42 +71,45 @@
       var endOfImages = Model.imageDtos.Count() - 1;
 
       foreach( var image in Model.imageDtos ) {
-        var startDiv = countImages % 4 == 0 ? "<div class=\"pieces\">" : "";
+        var startDiv = countImages % 4 == 0 ? "<div class=\"images\">" : "";
         var endDiv = countImages % 4 == 3 || countImages == endOfImages ? "</div>" : "";
         countImages++;
 
         @Html.Raw( startDiv );
         <div class="panel marRight30">
-          <div class="content">
-            @{
-              var source = image.imagesPath + image.imageName + "." + image.imageExt;
+          @{
+            var source = image.imagesPath + image.imageName + "." + image.imageExt;
 
-              <div class="imgDiv">
-                <a href="../../Images/Details/@image.imageId">
-                  <img src="@source" height="150" />
-                </a>
-              </div>
-            }
-          </div>
+            <div class="imgDiv">
+              <a href="../../Images/Details/@image.imageId">
+                <img src="@source" />
+              </a>
+            </div>
+          }
         </div>
         @Html.Raw( endDiv );
       }
     }
-    <div class="actionLinkDiv">
-      <div class="buttonAction">
-        @Html.ActionLink( "Edit", "Edit", new {
-            id = Model.pieceDto.pieceId
-        } )
-      </div> |
-      <div class="buttonAction">
-        @Html.ActionLink( "Add New Image", "../Images/Create", new {
-            id = Model.pieceDto.pieceId
-        } )
-      </div>
+  <div class="actionLinkDiv">
+    <div class="buttonAction">
+      @Html.ActionLink( "Delete", "DeleteConfirm", new {
+          id = Model.pieceDto.pieceId
+      } )
+    </div>
+    <div class="buttonAction">
+      @Html.ActionLink( "Edit", "Edit", new {
+          id = Model.pieceDto.pieceId
+      } )
+    </div>
+    <div class="buttonAction">
+      @Html.ActionLink( "Add Image", "../Images/Create", new {
+          id = Model.pieceDto.pieceId
+      } )
     </div>
   </div>
+  </div>
   <div class="actionLinkDiv">
-    @Html.ActionLink( "Back to List", "Index" ) |
+    @Html.ActionLink( "Pieces List", "Index" ) |
   </div>
 </main>
 

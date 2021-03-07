@@ -18,6 +18,10 @@ namespace ArtGallery.Models
             get; set;
         }
 
+        public string formDescription {
+            get; set;
+        }
+
         public ICollection<Piece> pieces {
             get; set;
         }
@@ -34,5 +38,11 @@ namespace ArtGallery.Models
         public string formName {
             get; set;
         }
+
+        [DisplayName( "Description" )]
+        public string formDescription {
+            get; set;
+        }
+
     }
 }

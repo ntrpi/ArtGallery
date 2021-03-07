@@ -19,6 +19,15 @@
         @Html.DisplayFor( model => model.formName )
       </dd>
     </dl>
+    <dl class="detailsTableDl">
+      <dt>
+        @Html.DisplayNameFor( model => model.formDescription )
+      </dt>
+
+      <dd>
+        @Html.DisplayFor( model => model.formDescription )
+      </dd>
+    </dl>
   </div>
   <div class="actionLinkDiv">
     <div class="buttonAction">
@@ -33,6 +42,6 @@
     </div>
   </div>
   <div class="actionLinkDiv">
-    @Html.ActionLink( "Back to List", "Index" )
+    @Html.ActionLink( "Forms List", "Index" )
   </div>
 </main>

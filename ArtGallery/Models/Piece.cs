@@ -61,6 +61,20 @@ namespace ArtGallery.Models
 
     public class PieceDto
     {
+        public static PieceDto getEmptyPieceDto( int formId )
+        {
+            return new PieceDto {
+                formId = formId,
+                pieceId = 0,
+                pieceName = "",
+                pieceDescription = "",
+                length = 0,
+                width = 0,
+                height = 0,
+                piecePrice = 0
+            };
+        }
+
         public int pieceId {
             get; set;
         }

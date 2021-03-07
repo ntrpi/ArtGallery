@@ -230,6 +230,10 @@
     <Compile Include="Migrations\202103041230570_ArtGallery_202103040730.Designer.cs">
       <DependentUpon>202103041230570_ArtGallery_202103040730.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103071705017_ArtGallery_202103071204.cs" />
+    <Compile Include="Migrations\202103071705017_ArtGallery_202103071204.Designer.cs">
+      <DependentUpon>202103071705017_ArtGallery_202103071204.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Form.cs" />
@@ -366,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103041230570_ArtGallery_202103040730.resx">
       <DependentUpon>202103041230570_ArtGallery_202103040730.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071705017_ArtGallery_202103071204.resx">
+      <DependentUpon>202103071705017_ArtGallery_202103071204.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

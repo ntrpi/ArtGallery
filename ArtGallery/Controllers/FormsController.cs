@@ -81,7 +81,7 @@ namespace ArtGallery.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "formId,formName")] Form form)
+        public ActionResult Edit([Bind(Include = "formId,formName,formDescription")] Form form)
         {
             string url = "FormsData/UpdateForm/" + form.formId;
             HttpResponseMessage response = helper.doPostRequest( url, form );

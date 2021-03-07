@@ -13,7 +13,7 @@
       @Html.AntiForgeryToken()
 
       @Html.HiddenFor( model => model.piece.pieceId, new {
-          Name = "pieceId", Value = Model.piece.pieceId
+        Name = "pieceId"
       } )
 
       <div class="form-horizontal">
@@ -148,6 +148,11 @@
                   id = Model.piece.pieceId
                 } )
               </div>
+              <div class="buttonAction">
+                @Html.ActionLink( "Add Image", "../Images/Create", new {
+                    id = Model.piece.pieceId
+                } )
+              </div>
               <input type="submit" value="Save" class="basicButton" />
             </div>
           </div>
@@ -158,6 +163,6 @@
 
 
   <div class="actionLinkDiv">
-    @Html.ActionLink( "Back to List", "Index" )
+    @Html.ActionLink( "Pieces List", "Index" )
   </div>
 </main>

@@ -21,6 +21,7 @@ namespace ArtGallery.Controllers
             FormDto formDto = new FormDto {
                 formId = form.formId,
                 formName = form.formName,
+                formDescription = form.formDescription
             };
             return formDto;
         }

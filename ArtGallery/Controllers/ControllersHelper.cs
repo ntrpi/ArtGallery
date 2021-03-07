@@ -164,6 +164,9 @@ namespace ArtGallery.Controllers
                     pieceDto = piece;
                 }
             }
+            if( pieceDto == null ) {
+                pieceDto = PieceDto.getEmptyPieceDto( formId );
+            }
             return pieceDto;
         }
 
@@ -206,6 +209,9 @@ namespace ArtGallery.Controllers
         /// <summary>
         public ImageDto getPrimaryImageDtoForPiece( int pieceId )
         {
+            if( pieceId == 0 ) {
+                return null;
+            }
             IEnumerable<ImageDto> imagesForPiece = getImageDtos( pieceId );
             ImageDto primaryImage = null;
             foreach( var image in imagesForPiece ) {
