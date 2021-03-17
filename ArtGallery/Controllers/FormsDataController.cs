@@ -16,6 +16,11 @@ namespace ArtGallery.Controllers
     {
         private ArtGalleryDbContext db = new ArtGalleryDbContext();
 
+        /// <summary>
+        /// A utility function to create a FormDto object with the data from a Form object.
+        /// </summary>
+        /// <param name="form">A Form object.</param>
+        /// <returns>A FormDto object containing the information in form.</returns>
         private FormDto getFormDtoFromForm( Form form )
         {
             FormDto formDto = new FormDto {
@@ -26,7 +31,14 @@ namespace ArtGallery.Controllers
             return formDto;
         }
 
-        // GET: api/FormsData/5
+        /// <summary>
+        /// Get a FormDto created with the information in the Form in the database with the given id.
+        /// </summary>
+        /// <param name="id">An integer representing the id of the required Form.</param>
+        /// <returns>A FormDto object.</returns>
+        /// <example>
+        /// GET: api/FormsData/5
+        /// </example>
         [ResponseType( typeof( FormDto ) )]
         [HttpGet]
         public IHttpActionResult GetFormDto( int id )
@@ -39,12 +51,22 @@ namespace ArtGallery.Controllers
             return Ok( getFormDtoFromForm( form ) );
         }
 
+        /// <summary>
+        /// We only want to send back FormDto objects, so this is a private utility function
+        /// that retrieves all the Forms from the database, which will be converted to FormDtos.
+        /// </summary>
+        /// <returns>A List of Form objects.</returns>
         private IEnumerable<Form> getForms()
         {
             List<Form> forms = db.forms.ToList();
             return forms;
         }
 
+        /// <summary>
+        /// A private utility function to convert a collection of Form objects to FormDtos.
+        /// </summary>
+        /// <param name="forms">A collection of Form objects.</param>
+        /// <returns>A collection of FormDto objects created with the data in the Forms that were passed in.</returns>
         private IEnumerable<FormDto> getFormDtos( IEnumerable<Form> forms )
         {
             List<FormDto> formDtos = new List<FormDto>();
@@ -54,7 +76,13 @@ namespace ArtGallery.Controllers
             return formDtos;
         }
 
-        // GET: api/FormsData
+        /// <summary>
+        /// Get a collection of FormDto objects that represent all the Forms in the database.
+        /// </summary>
+        /// <returns>A collection of FormDto objects.</returns>
+        /// <example>
+        /// GET: api/FormsData
+        /// </example>
         [HttpGet]
         public IEnumerable<FormDto> GetFormDtos()
         {
@@ -62,7 +90,17 @@ namespace ArtGallery.Controllers
             return getFormDtos( forms );
         }
 
-        // PUT: api/FormsData/5
+        /// <summary>
+        /// Updates a Form in the database given information about the form.
+        /// </summary>
+        /// <param name="id">The form id.</param>
+        /// <param name="form">A Form object, received as POST data.</param>
+        /// <returns>If the update is successful, a NoContent status code is returned. 
+        /// Otherwise, a NotFound ActionResult is returned.</returns>
+        /// <example>
+        /// POST: api/FormsData/UpdateForm/5
+        /// FORM DATA: Form JSON Object
+        /// </example>
         [ResponseType( typeof( void ) )]
         [HttpPost]
         public IHttpActionResult UpdateForm( int id, [FromBody] Form form )
@@ -90,8 +128,17 @@ namespace ArtGallery.Controllers
             return StatusCode( HttpStatusCode.NoContent );
         }
 
-        // POST: api/FormsData
-        [ResponseType( typeof( Form ) )]
+        /// <summary>
+        /// Creates a Form in the database given information about the form.
+        /// </summary>
+        /// <param name="form">A Form object, received as POST data.</param>
+        /// <returns>If the creation is successful, an ActionResult with the id of the form is returned. 
+        /// Otherwise, a BadRequest ActionResult is returned.</returns>
+        /// <example>
+        /// POST: api/FormsData/CreateForm
+        /// FORM DATA: Form JSON Object
+        /// </example>
+        [ResponseType( typeof( int ) )]
         [HttpPost]
         public IHttpActionResult CreateForm( [FromBody] Form form )
         {
@@ -107,7 +154,15 @@ namespace ArtGallery.Controllers
             }, form );
         }
 
-        // DELETE: api/FormsData/5
+        /// <summary>
+        /// Deletes the Form in the database with the given id.
+        /// </summary>
+        /// <param name="id">The form id.</param>
+        /// <returns>If the update is successful, an Ok status code is returned. 
+        /// Otherwise, a NotFound ActionResult is returned.</returns>
+        /// <example>
+        /// DELETE: api/FormsData/5
+        /// </example>
         [HttpPost]
         public IHttpActionResult DeleteForm( int id )
         {
