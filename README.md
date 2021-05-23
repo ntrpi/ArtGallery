@@ -7,7 +7,7 @@
 ***
 ***
 *** To avoid retyping too much info. Do a search and replace for the following:
-*** ntrpi, ArtGallery, twitter_handle, kupfer.sandra@gmail.com, ArtGallery, For this project we were encouraged to create an app about something we have a personal interest in. I started painting about 10 months ago and I have found that I love it. I created this app as a way to showcase my work, and eventually sell it. Both the app and painting are a work in progress.
+*** ntrpi, ArtGallery, twitter_handle, kupfer.sandra@gmail.com, ArtGallery, For this project we were encouraged to create an app about something we have a personal interest in. I started painting in spring of 2020 and I have found that I love it. I created this app as a way to showcase my work, and eventually sell it. Both the app and painting are a work in progress.
 -->
 
 
@@ -39,7 +39,7 @@
   <h3 align="center">HTTP5204 Passion Project - Art Gallery</h3>
 
   <p align="center">
-    For this project we were encouraged to create an app about something we have a personal interest in. I started painting about 10 months ago and I have found that I love it. I created this app as a way to showcase my work, and eventually sell it. Both the app and painting are a work in progress.
+    For this project we were encouraged to create an app about something we have a personal interest in. I started painting in spring of 2020 and I have found that I love it. I created this app as a way to showcase my work, and eventually sell it. Both the app and painting are a work in progress.
     <br />
     <!-- <a href="https://github.com/ntrpi/ArtGallery"><strong>Explore the docs »</strong></a>
     <br /> -->
