@@ -1,9 +1,11 @@
 ﻿@model ArtGallery.Models.ViewModels.ViewFormPieces
 
 @{
+    var formDescription = "";
     var formName = Model.formDto.formName;
     if( formName == "Box" || formName == "Canvas" ) {
       ViewBag.Title = formName + "es";
+      formDescription = "Bring beauty to your walls";
     } else {
       ViewBag.Title = formName + "s";
     }
@@ -14,7 +16,7 @@
   <div class="piecesDiv">
     <div class="title">
       <h1>@ViewBag.Title</h1>
-      <h2>Form description TODO</h2>
+      <h2>@formDescription</h2>
     </div>
     @{
         var countPieces = 0;

@@ -104,7 +104,6 @@ namespace ArtGallery.Controllers
             } );
         }
 
-        // GET: Pieces/Delete/5
         public ActionResult DeleteConfirm( int id )
         {
             ViewPiece viewPiece = helper.getViewPiece( id );

@@ -14,7 +14,6 @@ namespace ArtGallery.Controllers
 {
     public class ImagesController : Controller
     {
-        private JavaScriptSerializer jss = new JavaScriptSerializer();
         private static readonly ControllersHelper helper;
 
         static ImagesController()

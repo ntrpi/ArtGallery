@@ -15,7 +15,7 @@
         <ul>
           <li><a href="/Home" class="active">home</a></li>
           <li><a href="/About">about</a></li>
-          <li><a href="/Categories">works</a></li>
+          <li><a href="/Categories">work</a></li>
           <li><a href="/Contact">contact</a></li>
           <li>
             @Html.ActionLink( "Log in", "Login", "Account", routeValues: null, htmlAttributes: new {
@@ -30,31 +30,32 @@
     @*<div class="border-bottom"></div>*@
     <div class="logo-wrapper">
       @{
-        var imagesPath = Url.Content( "~/Content/Images/" );
-        var logoWrapLeft = imagesPath + "logo-wrap-left.jpg";
-        var logoWrapRight = imagesPath + "logo-wrap-right.jpg";
-        var bannerWrapLeft = imagesPath + "banner-wrap-left.jpg";
-        var bannerWrapRight = imagesPath + "banner-wrap-right.jpg";
+          var imagesPath = Url.Content( "~/Content/Images/" );
+          var logoWrapLeft = imagesPath + "logo-wrap-left.jpg";
+          var logoWrapRight = imagesPath + "logo-wrap-right.jpg";
+          var bannerWrapLeft = imagesPath + "banner-wrap-left.jpg";
+          var bannerWrapRight = imagesPath + "banner-wrap-right.jpg";
+          var logoWhite = imagesPath + "LogoWhite.png";
       }
-      <div class="leftshadow"><img src="@logoWrapLeft" /></div>
+      <div class="leftshadow"><img src="@logoWrapLeft" alt="Black rectangle." /></div>
       <div class="logo">
-        <h1>SKDS</h1>
+        <img src="@logoWhite" alt="SKDS logo."/>
       </div>
       <div class="rightshadow"><img src="@logoWrapRight" /></div>
     </div>
     <div class="clearing"></div>
     <div class="banner-wrapper">
-      <div class="bannerlef"><img src="@bannerWrapLeft" /></div>
-      <div class="banner-container">
+      <div class="bannerleft"><img src="@bannerWrapLeft" /></div>
+      <div class="container-fluid">
         <div class="banner">
-          <div class="banner-content">
-            <h1>Art Gallery</h1>
-            <h2>better name coming soon</h2>
+          <div class="banner-content text-center">
+            <h1 class="text-wrap">Sandra K&uuml;pfer Art</h1>
+            <h2>Add beauty to your world</h2>
             <a href="#">View Work</a>
           </div>
         </div>
       </div>
-      <div class="bannerright"><img src="@bannerWrapRight" /></div>
+      <div class="bannerright"><img src="@bannerWrapRight" alt="Black rectangle." /></div>
     </div>
   </header>
 

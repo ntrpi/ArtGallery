@@ -10,7 +10,7 @@ using ArtGallery.Models.ViewModels;
 
 namespace ArtGallery.Controllers
 {
-    public class FormsController : Controller
+    public class FormsController: Controller
     {
         //Http Client is the proper way to connect to a webapi
         //https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-5.0
@@ -37,7 +37,7 @@ namespace ArtGallery.Controllers
         }
 
         // GET: Forms/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details( int id )
         {
             FormDto formDto = helper.getFormDto( id );
             if( formDto == null ) {
@@ -67,11 +67,11 @@ namespace ArtGallery.Controllers
                 return View();
             }
 
-           return RedirectToAction( "Index" );
+            return RedirectToAction( "Index" );
         }
 
         // GET: Forms/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit( int id )
         {
             return View( helper.getFormDto( id ) );
         }
@@ -81,7 +81,7 @@ namespace ArtGallery.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "formId,formName,formDescription")] Form form)
+        public ActionResult Edit( [Bind( Include = "formId,formName,formDescription" )] Form form )
         {
             string url = "FormsData/UpdateForm/" + form.formId;
             HttpResponseMessage response = helper.doPostRequest( url, form );

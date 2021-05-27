@@ -231,6 +231,11 @@ HEADER CLASSES
   float: left;
 }
 
+.logo img {
+  height: 50px;
+  padding: 10px;
+}
+
   .logo h1 {
     font-family: "Trebuchet MS";
     font-size: 42px;
@@ -244,13 +249,13 @@ HEADER CLASSES
 BANNER CLASSES
 -------------------------------------------------*/
 .banner-wrapper {
-  width: 1020px;
+  max-width: 1020px;
   margin: 0 auto;
   overflow: hidden;
   margin-bottom: 14px;
 }
 
-.bannerlef {
+.bannerleft {
   width: 10px;
   float: left;
 }
@@ -261,7 +266,6 @@ BANNER CLASSES
 }
 
 .banner-container {
-  width: 1000px;
   float: left;
 }
 
@@ -280,7 +284,6 @@ BANNER CLASSES
 }
 
 .banner-content {
-  width: 560px;
   margin: 0 auto;
   padding-top: 70px;
 }
@@ -361,7 +364,7 @@ GENERAL CLASSES
   width: 100%;
   overflow: hidden;
   background: #2c3847;
-  padding-bottom: 40px;
+  padding-bottom: 1rem;
 }
 /*-------------------------------------------------
 LAYOUT CLASSS
